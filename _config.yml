@@ -1,7 +1,7 @@
 title: lolkatz blog
 author: lolkatz
 description: > # this means to ignore newlines until "baseurl:"
-In this blog I wish to presents writeups for some CTF I've done
+"In this blog I wish to presents writeups for some CTF I've done"
 
 # social links
 twitter_username: 0xfil # DO NOT include the @ character, or else the build will fail!
