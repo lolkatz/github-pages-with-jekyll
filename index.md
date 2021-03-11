@@ -1,3 +1,3 @@
-# Welcome to my blog
+# Welcome to lolkatz blog
 
-I'm glad you are here. I plan to talk about ...
+In this blog I wish to present writeups for some CTF I've done.
