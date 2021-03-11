@@ -1,3 +1,3 @@
-# Welcome to lolkatz blog
+# lol
 
-In this blog I wish to present writeups for some CTF I've done.
+wut
