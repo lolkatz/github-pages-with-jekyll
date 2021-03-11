@@ -1,3 +1,1 @@
-# lol
-
-wut
+Hack for good and protect the internet!
