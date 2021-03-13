@@ -1,1 +1,1 @@
-A simple blog to showcase writeups for CTF I've done.
+A simple blog to showcase writeups for CTF I've done. I do most of my hacking in a Kali linux virtual machine hosted on a Windows 10. I use VirtualBox because the free version allows to take snapshots. For browser I use Firefox who respect privacy, has tons of useful extensions and has nice developer tools, even allowing you to edit and resend a request. 
