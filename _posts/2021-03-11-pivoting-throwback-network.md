@@ -430,4 +430,4 @@ This post was only a brief introduction to the Throwback network. If you hack th
 
  Finally, I'll just give you a quick hint if you have difficulty entering the last domain. I had difficulty setting up my proxychains for it and my ssh connection were refused. So I used the previous proxychains with xfreedrdp to connect to Throwback-DC01 and then I used Windows Remote Desktop to connect to Corporate DC01. Might not be elegant but it worked! :joy_cat:
 
- I still have lots to learn about network pentesting and pivoting and I'dlike to have another go with this network once I have more experience. Have a good one and help making the internet a safer place!
+ I still have lots to learn about network pentesting and pivoting and I'dlike to have another go with this network once I have more experience. Have a good one and help make the internet a safer place!
