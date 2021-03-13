@@ -10,7 +10,7 @@ The Throwback network on [Tryhackme](https://tryhackme.com/room/throwback) simul
 ## The lay of the land
 At first you only some of the machine and they are added to the network diagram as you discovered them. I'll show you what the entire network looks like instead:
 
-![Throwback network diagram](assets/images/tb-network-diagram.png)\
+![Throwback network diagram](github-pages-with-jekyll/assets/images/tb-network-diagram.png)\
 Figure 1: The Throwback network diagram
 
 
