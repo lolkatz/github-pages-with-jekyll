@@ -31,6 +31,7 @@ If you don't want to read the output I've made a recap:
 <details>
     <summary> Click if you want a more detailed look </summary>
 
+    ````
     Nmap scan report for 10.200.19.138
     Host is up, received syn-ack (0.11s latency).
     Scanned at 2021-03-11 18:57:58 EST for 359s
@@ -252,7 +253,8 @@ If you don't want to read the output I've made a recap:
     |_-----END CERTIFICATE-----
     |_ssl-date: TLS randomness does not represent time
     Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
-
+    ````
+    
 </details>
 <br>
 
