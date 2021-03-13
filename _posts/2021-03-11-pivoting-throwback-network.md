@@ -255,12 +255,12 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Next let's take a look at the company website. There is some employees photos and job title, always fun to see who's behind the username we will encounter. There is also email contacts that could be useful but we will getting a lot more of them in the next section. At the bottom of the site there is link to Linkedin and Twitter account which we could visit eventually.
 
 ![Throwback hacks website](/github-pages-with-jekyll/assets/images/tb-hacks-website.png)\
-Figure 2: Throwback Hacks website\
+Figure 2: Throwback Hacks website
 
 Before we go any further I'll show you a slightly different network diagram notice that will help me illustrate the path I took through the network. On the diagram you can see my laptop which has VPN connection to the network, I’ll use the IP that correspond to tun0 (you can see that IP using ifconfig). The network I'm in is 10.200.19.0/24 but yours maybe different i.e. 10.200.x.0/24.
 
 ![Throwback hacks website](/github-pages-with-jekyll/assets/images/tb-network-diagram2.png)\
-Figure 3: Network diagram from my perspective\
+Figure 3: Network diagram from my perspective
 
 There is multiple path to reach the Throwback domain but I will use an easy and fast way: the phishing campaign.
 
@@ -425,4 +425,4 @@ This post was only a brief introduction to the Throwback network. If you hack th
 
  Finally, I'll just give you a quick hint if you have difficulty entering the last domain. I had difficulty setting up my proxychains for it and my ssh connection were refused. So I used the previous proxychains with xfreedrdp to connect to Throwback-DC01 and then I used Windows Remote Desktop to connect to Corporate DC01. Might not be the most elegant way but it worked!
 
- I still have lots to learn about network pentesting and pivoting and I'd like to have another go with this network once I have more experience. Have a good time hacking those networks and strive to make internet a safer place!
+ I still have lots to learn about network pentesting and pivoting and I'd like to have another go with this network once I have more experience. Have a good time hacking those networks and strive to make the internet a safer place!
