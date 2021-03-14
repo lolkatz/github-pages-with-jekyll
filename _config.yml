@@ -9,3 +9,9 @@ github_username:  lolkatz # DO NOT include the @ character, or else the build wi
 show_excerpts: true # set to false to remove excerpts on the homepage
 
 theme: minima
+
+---
+layout: default
+comments: true
+# other options
+---
