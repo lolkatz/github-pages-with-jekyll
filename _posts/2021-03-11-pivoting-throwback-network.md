@@ -415,8 +415,8 @@ If the port is open then your proxychains is working and you are now in the Thro
 
 This post was only a brief introduction to the Throwback network. If you hack the other boxes in the DMZ you will see a lot of fun stuff: default credentials, remote code execution, LLMNR poisoning, password spraying with hydra and so on.
 
- The hardest part for me was pivoting around the network and it's not over yet, rembember you still have to access the corporate domain. There is plenty of fun stuff you still have to see: bloodhound, kerberoasting, OSINT and even crafting an excel file with a malicious macro inside.
+ The hardest part for me was pivoting around the network and it's not over for you yet, rembember you still have to access the corporate domain. There is plenty of fun stuff you still have to see: bloodhound, kerberoasting, OSINT and even crafting an excel file with a malicious macro inside.
 
- Finally, I'll just give you a quick hint if you have difficulty entering the last domain. I had some troubles setting up my proxychains for it and my ssh connection were refused. So I used the previous proxychains with xfreedrdp to connect to Throwback-DC01 and then I used Windows Remote Desktop to connect to Corporate DC01.
+ Finally, I'll just give you a quick hint if you have difficulty entering the last domain. I had some troubles setting up my proxychains for it and my ssh connection were refused. So I used the previous proxychains with xfreedrdp to connect to Throwback-DC01 and then I used Windows Remote Desktop to connect to Corporate DC01. Oh well, whatever works!
 
- I still have lots to learn about pivoting and I felt my grip was loosening as I went deeper into the network. Network segmentation adds another layer of security and help protect those assets. Have a good time hacking networks and always strive to make the internet a safer place.
+ That was the first time I had to pivot into a network and I felt my grip was loosening as I went deeper into the network. Network segmentation adds another layer of security and help protect those assets. Have a good time hacking networks and always strive to make the internet a safer place.
