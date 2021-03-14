@@ -10,8 +10,5 @@ show_excerpts: true # set to false to remove excerpts on the homepage
 
 theme: minima
 
----
-layout: default
-comments: true
-# other options
----
+disqus:
+  shortname: https-lolkatz-github-io-github-pages-with-jekyll
