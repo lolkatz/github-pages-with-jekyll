@@ -1,1 +1,1 @@
-I'm new to hacking and I tought doing CTF writeups will help me learn and improve. I'm also a developer so I'll also post about some hacking techniques I found interesting. I do most of my hacking in a Kali linux VM hosted on a Windows 10 machine. 
+I'm new to hacking and I tought doing CTF writeups will help me learn and improve. I'm also a developer so I'll also post about some hacking tools and techniques I found interesting. I do most of my hacking in a Kali linux VM hosted on a Windows 10 machine. 
