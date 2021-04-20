@@ -19,6 +19,6 @@ sudo nmap -sV -script vuln <IP>
 ````
 At first I omitted the -sV flag and it only gives me one vulnerability but adding the flag it gave me almost forty. There is bound to have false positive or CVE that cannot be exploited but it gives you options.
 
-There was a section of the room that was about Empire exploitation framework, it didn't work for me. From what I've heard there was a bug linked to the pivoting so maybe it will be fixed when you try it or you could downgrade you version. It's entirely optional so don't worry about it.
+There was a section of the room that was about Empire exploitation framework, it didn't work for me. From what I've heard there was a bug linked to the pivoting so maybe it will be fixed when you try it or you could downgrade your version. It's entirely optional so don't worry about it.
 
 The Wreath network was quite an experience for me and I can't wait for the next Tryhackme network. Until then have fun and hack responsibly!
