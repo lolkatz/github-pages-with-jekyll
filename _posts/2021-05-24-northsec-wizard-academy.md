@@ -1,6 +1,6 @@
 This year [Northsec CTF](https://youtu.be/wJpInBMBSkg?t=2485) was medieval themed and took place in the land of North Sectoria. In this kingdom, hackers are called magicians. Do you have what it takes to become a wizard?
 
-![Map of North Secotria](/will-hack-for-coffee/assets/images/map-north-sectoria.png)\
+![Map of North Sectoria](/will-hack-for-coffee/assets/images/north-sectoria-map.png)
 
 I had the opprotunity to play on the CTF with a team called Mary Poppins Shell. This year CTF featured a beginner track called Wizard academy and we finished most of the challenges in this track. The challenges included basic HTML, local file inclusion (LFI), file upload, SQL injection, server side request forgery (SSRF), open redirect and deserialization. 
 
@@ -29,8 +29,10 @@ The first challenge was quite simple. Looking at the source code of the page, we
 ### Automatization 102
 Looking in robots.txt we find a reference to a "secret file":
 
+````
 User-agent: *
 Disallow: secret-b42677bf3f974f7.txt
+````
 
 Browsing to this page we found the next flag.
 
@@ -42,9 +44,10 @@ This set of challenges involved Local File Inclusion (LFI). The url had a query 
 
 ## LFI 101
 
-The first challenge was solved by a  by modifying the query string as such:
-?page=/etc/passwd
-Revealing the linux password file as well as the flag. He also solved the [LFI 103](https://erichogue.ca/2021/05/NorthSec2021WriteupMentalism/#mentalism-103).
+The first challenge was solved by a  by modifying the query string as such:  
+?page=/etc/passwd  
+
+This revealed the linux password file as well as the flag. He also solved the [LFI 103](https://erichogue.ca/2021/05/NorthSec2021WriteupMentalism/#mentalism-103).
 
 ## Spell recipe upload
 
@@ -63,14 +66,19 @@ For this challenge, we kept the previous file and uploaded it again. We intercep
 
 We then modified the content type of the request like so to obtain the flag:
 
+
 ![Modifying content type with Burp](/will-hack-for-coffee/assets/images/file-upload102.png)
 
 ### File upload 103
 
 For the third challenge, using the same previous technique was not enough. So we decided to add a magic number to the file. Looking at the list of file signature ([List of file signatures](https://en.wikipedia.org/wiki/List_of_file_signatures)):
-![JPG file signature](/will-hack-for-coffee/assets/images/jpg-file-signature.png)\
+
+![JPG file signature](/will-hack-for-coffee/assets/images/jpg-file-signature.png)
+
 With a text editor we added a line with four characters ('AAAA') at the beginning of the file. Then using hexedit we replaced those caracters with the jpg file signature:
-![hexedit](/will-hack-for-coffee/assets/images/hexedit.png)\
+
+![hexedit](/will-hack-for-coffee/assets/images/hexedit.png)
+
 Uploading this file got us another flag.
 
 # What do you mean Spell Query Langage?
@@ -81,7 +89,7 @@ This set of challenges involved SQL injection. I tried the most basic injection:
 
 My teammates found the first flag using UNION based SQL injection:
 
-![Union based SQL injection](/will-hack-for-coffee/assets/images/sql-injection.png)\
+![Union based SQL injection](/will-hack-for-coffee/assets/images/sql-injection101.png)
 
 [They](https://erichogue.ca/2021/05/NorthSec2021WriteupSpellQueryLanguage/#flag-1) also found the second one, kudos to them!
 
