@@ -1,6 +1,11 @@
+---
+title: "Northsec CTF - part 2"
+date: 2021-05-24
+---
+
 # The wizard academy
 
-This year [Northsec CTF](https://www.youtube.com/watch?v=wJpInBMBSkg) was medieval themed and took place in the land of North Sectoria. In this kingdom, hackers are called magicians. Do you have what it takes to become a wizard?
+This year [Northsec CTF](https://youtu.be/wJpInBMBSkg?t=2485) was medieval themed and took place in the land of North Sectoria. In this kingdom, hackers are called magicians. Do you have what it takes to become a wizard?
 
 ![Map of North Secotria](/will-hack-for-coffee/assets/images/map-north-sectoria.png)\
 
@@ -13,7 +18,7 @@ The first set of challenge was called Automatization and was a pun based on the 
 ### Automatization 101
 The first challenge was quite simple. Looking at the source code of the page, we got our first flag:
 
-``
+````
 <!DOCTYPE html>
 <html>
     <head>
@@ -26,7 +31,7 @@ The first challenge was quite simple. Looking at the source code of the page, we
         </div>
     </body>
 </html>
-``
+````
 
 ### Automatization 102
 Looking in robots.txt we find a reference to a "secret file":
@@ -40,7 +45,7 @@ Browsing to this page we found the next flag.
 
 This set of challenges involved Local File Inclusion (LFI). The url had a query string: ?page=hackademy.php
 
-![mentalism.png](/will-hack-for-coffee/assets/images/mentalism101.png)\
+![mentalism.png](/will-hack-for-coffee/assets/images/mentalism101.png)
 
 ## LFI 101
 
@@ -65,7 +70,7 @@ For this challenge, we kept the previous file and uploaded it again. We intercep
 
 We then modified the content type of the request like so to obtain the flag:
 
-![Modifying content type with Burp](/will-hack-for-coffee/assets/images/file-upload102.png)\
+![Modifying content type with Burp](/will-hack-for-coffee/assets/images/file-upload102.png)
 
 ### File upload 103
 
@@ -95,7 +100,7 @@ Wait a minute, is that Server Side Request Forgery? I was always tought that was
 
 The API allows to pass HTTP request along method GET and POST, as well as parameters. But can we request file?
 
-![SSRF 101](/will-hack-for-coffee/assets/images/ssrf-passwd.png)\
+![SSRF 101](/will-hack-for-coffee/assets/images/ssrf-passwd.png)
 
 After this I was wondering which other files I could look up, someone suggested to look for flag obviously, and there it was at the the root of the directory:
 
@@ -116,19 +121,19 @@ That's another challenge that was solved by my teammate. I've never done deseria
 
 # Bonus points: Hackers trivia
 
-In the CTF, there was also trivia questions about the 1995 movie Hackers starring the lovely Angelina Jolie. The first seven questions could be obtained from (closely) watching the movie but the last two required external resources.\
+In the CTF, there was also trivia questions about the 1995 movie Hackers starring the lovely Angelina Jolie. The first seven questions could be obtained from (closely) watching the movie but the last two required external resources.
 
-What’s the best brand of toothbrush to wash your teeth after your morning Cereal?\ 
+What’s the best brand of toothbrush to wash your teeth after your morning Cereal? 
 
 We will have to ask Twitter about this one:
 
-![Cereal Killer on Twitter](/will-hack-for-coffee/assets/images/ceralKillerToothbrush.png)\
+![Cereal Killer on Twitter](/will-hack-for-coffee/assets/images/ceralKillerToothbrush.png)
 
-Also known as “cyberspirits”, how are these magnificient subway rollerbladers also called?\ 
+Also known as “cyberspirits”, how are these magnificient subway rollerbladers also called?
 
 The folks at HackersCurator will be pleased to answer that one:
 
-[Hackers director interview](/will-hack-for-coffee/assets/images/https://youtu.be/ZpMVgNNZDPw?t=1431)
+[Hackers director interview](https://youtu.be/ZpMVgNNZDPw?t=1431)
 
 I hope you had fun at NorthSec, until next year: Hack the planet!
 
