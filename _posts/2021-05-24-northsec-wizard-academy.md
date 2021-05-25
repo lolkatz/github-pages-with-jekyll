@@ -81,11 +81,11 @@ With a text editor we added a line with four characters ('AAAA') at the beginnin
 
 Uploading this file got us another flag.
 
-# What do you mean Spell Query Langage?
+## What do you mean Spell Query Langage?
 
 This set of challenges involved SQL injection. I tried the most basic injection: "lol ' or '1'='1' -- " but it didn't work. Thinking back I should have tried [SQLmap](https://lolkatz.github.io/will-hack-for-coffee/2021/03/15/full-database-exfiltration-oneliner.html), oh well maybe next time. 
 
-## SQL 101
+### SQL 101
 
 My teammates found the first flag using UNION based SQL injection:
 
@@ -97,7 +97,7 @@ My teammates found the first flag using UNION based SQL injection:
 
 Wait a minute, is that Server Side Request Forgery? I was always tought that was pretty advanced stuff so I was thrilled to look at this.
 
-## SSRF 101
+### SSRF 101
 
 The API allows to pass HTTP request along method GET and POST, as well as parameters. But can we request file?
 
@@ -120,7 +120,7 @@ My teammate also solved that challenge, it's really well explained so I'll let y
 
 That's another challenge that was solved by my teammate. I've never done deserialisation so I wish I had time to try it myself but at least you can read about it: [Spellrialize](https://erichogue.ca/2021/05/NorthSec2021WriteupSpellrialize/)
 
-# Bonus points: Hackers trivia
+## Bonus points: Hackers trivia
 
 In the CTF, there was also trivia questions about the 1995 movie Hackers starring the lovely Angelina Jolie. The first seven questions could be obtained from (closely) watching the movie but the last two required external resources.
 
