@@ -29,7 +29,7 @@ And with that I was done with the warmup... or was I? Soon after, there was a vi
 
 And then a few days before the CTF began, those who had done all the warmup received a link to a video. It featured the song Dance Monkey from Tones and I, which I didn't knew but the song is catchy and the videoclip is very funny. Frome times to times you'll see some of the Northsec crew dancing along the music. But there is also subtitles that are added and they are slightly different then the lyrics.
 
-![Hack one more time](/will-hack-for-coffee/assets/images/more-warmup.png). So here is some of the lyrics:
+![Hack one more time](/will-hack-for-coffee/assets/images/hack-one-more-time.png). So here is some of the lyrics:
 
 ````
 They say oh my god I see the way you scan
@@ -50,7 +50,7 @@ And when you're done I'll make you pop a shell again
 ````
 The lyrics also mentions Wannacry, APT and malware, all that good hacker stuff. And there is a word uttered throughout the videoclip: Success. If you pay attention you'll also see a number appears in the bottom righ corner:
 
-![Hack one more time](/will-hack-for-coffee/assets/images/hidden-ip.png).
+![Hidden IP](/will-hack-for-coffee/assets/images/hidden-ip.png).
 
 There is also another text at the end that says: The numbers are an ipv4 address. So I used that -sT parameter with nmap and I found nothing, apparently it was a joke and by doing so the firewall will detect the scan. So I then used a more classic scan techniques, stopping right after port 4999 like they tol me:
 
@@ -117,7 +117,7 @@ FLAG-zsh: segmentation fault  ./crackme
 ````
 So it crash just before printing the content of the flag so we ran ghidra for static analysis of the crackme file.
 
-![pawnfdb](/will-hack-for-coffee/assets/images/pawngdb.png)
+![pawngdb](/will-hack-for-coffee/assets/images/pawngdb.png)
 
 Then we switched to gdb for dynamic analysis. What I like is that he shown us how to set up GDB in a much more useful ways using the pwndbg, it allows you to see the register, the stack and the assembly code all at once. Since we suspect by examining the source code earlier with hydra that the raise call was making the program crash we can set the ip to the next adress, skipping that line entirely.
 
