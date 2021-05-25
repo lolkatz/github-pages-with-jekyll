@@ -1,10 +1,3 @@
----
-title: "Northsec CTF - part 2"
-date: 2021-05-24
----
-
-# The wizard academy
-
 This year [Northsec CTF](https://youtu.be/wJpInBMBSkg?t=2485) was medieval themed and took place in the land of North Sectoria. In this kingdom, hackers are called magicians. Do you have what it takes to become a wizard?
 
 ![Map of North Secotria](/will-hack-for-coffee/assets/images/map-north-sectoria.png)\
