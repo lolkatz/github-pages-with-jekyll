@@ -1,10 +1,10 @@
-I participated in Northsec 2021 CTF. It was superfun and the build up to it kept us busy. First I ordered the badge wich was packed full of cool features of what I have only scratch the surface. Then they had a competition called CTF warmup on the NSEC discord that culminated in a mock hack on a public IP. There was also an excellent CTF 101 workshop that I attended. Plus I'll tell you a little bit about the initial setup on there infra that was all in IPv6. Finally, I'll show you where we find our first flag long before the event even started.
+I participated in Northsec 2021 CTF. It was super fun and the build up to it kept us pretty busy. First I ordered the badge wich was packed full of cool features of what I have only scratch the surface. Then they had a competition called CTF warmup on the NSEC discord that culminated in a mock hack on a public IP. There was also an excellent CTF 101 workshop that I attended. Plus I'll tell you a little bit about the initial setup on there infra that was all in IPv6. Finally, I'll show you where we find our first flag long before the event even started.
 
 ## First the badge
 
 The badge was totally optional since the event was entirely remote but there is game inside so I could not resist. Plus it's good looking and has LEDs:
 
-![Northsec 2021 badge](/will-hack-for-coffee/assets/images/nsec2021-badge.png)
+![Northsec 2021 badge](/will-hack-for-coffee/assets/images/nsec2021-badge.jpg)
 
 So the badge has a screen as well as some buttons to act as a controller. There also two buttons at the back, one acting as a reset. No battery included but there is a connector at the back if you want to tinker with it. This badge also feature WIFI and sound. The game has a retro RPG look and at the bottom of the screen you can see that I grabbed 3/10 flags. I explored the small map, talked with the villagers, looted a chest and visited some building. It seems Ubisoft was somewhat involved in that game and it's no surprise because the game looks professional. One of the buildings allows you to play some songs and tinker with the LEDs. You can also connect yourself through a USB CLI interface using that command:
 ````
@@ -29,7 +29,9 @@ And with that I was done with the warmup... or was I? Soon after, there was a vi
 
 And then a few days before the CTF began, those who had done all the warmup received a link to a video. It featured the song Dance Monkey from Tones and I, which I didn't knew but the song is catchy and the videoclip is very funny. Frome times to times you'll see some of the Northsec crew dancing along the music. But there is also subtitles that are added and they are slightly different then the lyrics.
 
-![Hack one more time](/will-hack-for-coffee/assets/images/hack-one-more-time.png). So here is some of the lyrics:
+![Hack one more time](/will-hack-for-coffee/assets/images/hack-one-more-time.png) 
+
+So here is some of the lyrics:
 
 ````
 They say oh my god I see the way you scan
@@ -132,9 +134,13 @@ Again binary exploit is more advanced stuff but it's also something useful to kn
 gcc -m32 -I./ -fno-stack-protector service.c -g -o service
 ````
 This will allow to see source code in GDB:
+
 ![Pawngdb with source code](/will-hack-for-coffee/assets/images/gdb-with-source-code.png)
+
 I also suggest that you modify the source code to remove the fork call so you won't have to constantly kill and restart service.
+
 ![Modified service source code](/will-hack-for-coffee/assets/images/modified-service-source-code.png)
+
 I did not complete the challenge by myself but using the same string as the instructor did I managed to grab the flag. That was the first time I saw that particular type of challenge. Usually buffer overflow exploit involve rewriting the Pointer Index register so that it point to a part of memory you overflowed with shellcode so you can pop a shell with the privilege associated to the binary. That was not the case for that challenge and I'll have to dig deeper to fully understand it. The best introduction to binary exploit I saw yet is on [Hack that box academy](https://academy.hackthebox.eu/course/preview/stack-based-buffer-overflows-on-linux-x86), it's free so take a look if you are interested to learn more.
 
 The [CTF 101 workshop](https://www.youtube.com/watch?v=wh7v_W27fbg) is available on Youtube if you are interested.
@@ -153,4 +159,4 @@ With that done, we were let loose on the network, like beasts looking for blood.
 
 ![Kali OpenVPN configuration - routes](/will-hack-for-coffee/assets/images/first-blood.png)
 
-The NorthSec really did an awesome job, they really did build up the hype before the CTF event and I liked every minutes of it. Until next time stay safe and hack responsibly!
+The NorthSec did an awesome job, they really did build up the hype before the CTF event and I liked every minutes of it. Until next time stay safe and hack responsibly!
