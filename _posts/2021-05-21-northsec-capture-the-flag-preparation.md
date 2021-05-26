@@ -4,7 +4,7 @@ I participated in Northsec 2021 CTF. It was superfun and the build up to it kept
 
 The badge was totally optional since the event was entirely remote but there is game inside so I could not resist. Plus it's good looking and has LEDs:
 
-![Modifying content type with Burp](/will-hack-for-coffee/assets/images/file-upload102.png)
+![Northsec 2021 badge](/will-hack-for-coffee/assets/images/nsec2021-badge.png)
 
 So the badge has a screen as well as some buttons to act as a controller. There also two buttons at the back, one acting as a reset. No battery included but there is a connector at the back if you want to tinker with it. This badge also feature WIFI and sound. The game has a retro RPG look and at the bottom of the screen you can see that I grabbed 3/10 flags. I explored the small map, talked with the villagers, looted a chest and visited some building. It seems Ubisoft was somewhat involved in that game and it's no surprise because the game looks professional. One of the buildings allows you to play some songs and tinker with the LEDs. You can also connect yourself through a USB CLI interface using that command:
 ````
@@ -117,21 +117,40 @@ FLAG-zsh: segmentation fault  ./crackme
 ````
 So it crash just before printing the content of the flag so we ran ghidra for static analysis of the crackme file.
 
-![pawngdb](/will-hack-for-coffee/assets/images/pawngdb.png)
+![Hydra](/will-hack-for-coffee/assets/images/hydra-crackme.png)
 
 Then we switched to gdb for dynamic analysis. What I like is that he shown us how to set up GDB in a much more useful ways using the pwndbg, it allows you to see the register, the stack and the assembly code all at once. Since we suspect by examining the source code earlier with hydra that the raise call was making the program crash we can set the ip to the next adress, skipping that line entirely.
 
-![Hydra](/will-hack-for-coffee/assets/images/hydra-crackme.png)
+![pawngdb](/will-hack-for-coffee/assets/images/pawngdb.png)
 
 So I learned a couple of things in that challenge, like switching between dynamic and static analysis. Plus I will be able to get more out of gdb.
 
 ### Binary exploit
 
-Again binary exploit is more advanced stuff but it's also something useful to know if you want to get better at CTF and it's essential to understand if you want to obtain the OSCP certification.
+Again binary exploit is more advanced stuff but it's also something useful to know if you want to get better at CTF and it's essential to understand if you want to obtain the OSCP certification. This time we have the source code so there is one more feature that I can show you with pawngdb but you need to slightly modify the suggested command to compile the source code to add -g:
+````
+gcc -m32 -I./ -fno-stack-protector service.c -g -o service
+````
+This will allow to see source code in GDB:
+![Pawngdb with source code](/will-hack-for-coffee/assets/images/gdb-with-source-code.png)
+I also suggest that you modify the source code to remove the fork call so you won't have to constantly kill and restart service.
+![Modified service source code](/will-hack-for-coffee/assets/images/modified-service-source-code.png)
+I did not complete the challenge by myself but using the same string as the instructor did I managed to grab the flag. That was the first time I saw that particular type of challenge. Usually buffer overflow exploit involve rewriting the Pointer Index register so that it point to a part of memory you overflowed with shellcode so you can pop a shell with the privilege associated to the binary. That was not the case for that challenge and I'll have to dig deeper to fully understand it. The best introduction to binary exploit I saw yet is on [Hack that box academy](https://academy.hackthebox.eu/course/preview/stack-based-buffer-overflows-on-linux-x86), it's free so take a look if you are interested to learn more.
 
 The [CTF 101 workshop](https://www.youtube.com/watch?v=wh7v_W27fbg) is available on Youtube if you are interested.
 
 ## Setting up and grabbing our first flag
 
-## (To be continued)
+The NorthSec infra for the CTF is entirely IPv6. The VPN gave us access to 9000::/16 subnets, I can't tell you how many IPs it represents but it's a pretty big network (hint: I don't know how to count up to that number). We obtained a certificate and a openVPN configuration file by mail with [instructions](https://nsec.io/vpn/). Some of us got our file attachment blocked and others found Northsec mail in the spam folder but nothing that couldn't be overcome. For browser I use Firefox so there was nothing special apart from installing the certificate but for there could be some additionnal difficulties for Chrome user. The steps to install the VPN were given for a Ubuntu machine but it was fairly straighforward for Kali:
 
+![Kali OpenVPN configuration](/will-hack-for-coffee/assets/images/kali-openvpn-config.png)
+
+I did had to search a little for the Routes options tough because I didn't had internet access on my machine at first:
+
+![Kali OpenVPN configuration - routes](/will-hack-for-coffee/assets/images/kali-openvpn-config2.png)
+
+With that done, we were let loose on the network, like beasts looking for blood. And there it was, in the wild, our first official flag!
+
+![Kali OpenVPN configuration - routes](/will-hack-for-coffee/assets/images/first-blood.png)
+
+The NorthSec really did an awesome job, they really did build up the hype before the CTF event and I liked every minutes of it. Until next time stay safe and hack responsibly!
