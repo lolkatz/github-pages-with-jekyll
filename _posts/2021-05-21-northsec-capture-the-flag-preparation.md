@@ -4,7 +4,7 @@ I participated in Northsec 2021 CTF. It was super fun and the build up to it kep
 
 The badge was totally optional since the event was remote but there is game inside so I could not resist. Plus it's good looking and has LEDs:
 
-![Northsec 2021 badge](/will-hack-for-coffee/assets/images/nsec2021-badge.jpg)
+![Northsec 2021 badge](/will-hack-for-coffee/assets/images/nsec2021-badge.png)
 
 So the badge has a screen as well as some buttons to act as a controller. There also two buttons at the back, one acting as a reset. No battery included but there is a connector at the back if you want to carry it around. This badge also feature WIFI and speaker. The game has a retro RPG look, it seems Ubisoft was somewhat involved in that game and it's no surprise because the game looks good. I explored the small map, heard some villagers jokes, looted a chest and visited some building.  One of the buildings allows you to play some songs, while another let you tinker with the LEDs. At the bottom of the screen you can see that I managed to grab 3 of the 10 flags. You can also connect yourself through a USB CLI interface using that command:
 ````
