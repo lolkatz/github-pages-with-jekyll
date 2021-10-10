@@ -1,3 +1,47 @@
+---
+title: "UnitedCTF 2021 part 1: Desjardins track (and more)"
+date: 2021-10-09
+---
+
+[UnitedCTF](https://www.unitedctf.ca/) is a Quebec university two week hacking competition that is open to all. It was the first time I participated and I was joined by a couple of my friends from Hackfest. I found it very beginner friendly, there was huge number of references and hints to help with the CTF and I managed to learn a couple of very interesting techniques. 
+
+## Crypto as a welcoming gift from United CTF
+
+One of the first challenge puzzled a lot of players myself included. The challenge was the second text in one of the Discord channels:
+
+![Discord flag](/will-hack-for-coffee/assets/images/unitedctf2021/discord-flag.png)
+
+I struggled at first, was it base64, a binary, some hex dump? I tried to concatenate the four strings but to no avail. I came back to it a week later and I thought maybe it's some hash? A wise man from Hackfest told me later that I could have used the hash-identifier tool in Linux, which is conveniently installed in kali. At that time tough I simply navigated to [Crack station](https://crackstation.net/) and got the flag:
+
+![Crack station working it magic](/will-hack-for-coffee/assets/images/unitedctf2021/crack-station-magic.png)
+
+Very reliable site for CTF but I would not recommend using it for sensitive hash tough (that you got from work or home network), since once they are on the internet your hash won't provide much protection to your password (as you can see).
+
+## Join the fun
+
+All the docker file to run those challenges are available on [United CTF git page](https://github.com/UnitedCTF/UnitedCTF-2021) so I was able to revisit them and solved some more using the writeups provided by the authors. Here is what I did to run one of my favorite challenge on my windows machine:
+- Install [docker](https://www.docker.com/get-started): There is a nice little tutorial you can do once you installed it that helped me getting started.
+- Clone the repository: Git was already installed on my machine so I just ran this line in the PowerShell window:
+````
+git clone https://github.com/UnitedCTF/UnitedCTF-2021.git
+````
+- Build:
+````
+ docker build -t plusbassoumissionnaire .
+````
+- Run: I used port 80 for this one but you might use other ports depending on the challenge (80:80 means your machine port and the docker port).
+````
+docker run -dp 80:80 plusbassoumissionnaire
+````
+- You can then access the challenge using localhost:80 or for my Kali VM I used the IP:port of the machine I was running docker from.
+
+Depending on the challenge, like with redos, I used that command and it configured the port for me:
+````
+docker-compose up
+````
+
+Since you can do the challenge even after it's over, you should try them and get back here if you want to know how I tackled them. The authors writeups are also included in the git repository.
+
 ## Desjardins Windows Forensics track
 
 [Desjardins](https://github.com/UnitedCTF/UnitedCTF-2021/blob/main/challenges/desjardins/Looking%20for%20interns-Recherchons%20des%20stagiaires.md) wants to recruit young talented individuals so they made a very interesting track about Windows Forensics for the CTF. You had to download an OVF image (a VMWare format) which hosted a Windows 10 machine containing four flags. There were forensics tools already installed so it made it a breeeze. They also linked a Youtube channel by [13Cubed](https://www.youtube.com/playlist?list=PLlv3b9B16ZadqDQH0lTRO4kqn2P1g9Mve) on Windows Forensics that taught you all you needed to know to solve the challenges. I've checked the links on the GitHub pages for the image and it seems to be still working but I'd hurry if you want to give this challenge a try.
@@ -51,10 +95,6 @@ For the second flag a wise man told from Hackfest told me that odt (and docx) fi
 ### To conclude
 
 I found the Desjardins track unique. It was my first experience of Windows forensics and it deepened my understandings of how Windows works behind the scenes. I hope they participate again next year and that they manage to recruit a couples of skilled hackers! 
-
-[Back to main article](2021-10-09-unitedctf2021.md)
-
-
 
 
 

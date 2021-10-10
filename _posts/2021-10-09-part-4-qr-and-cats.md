@@ -1,4 +1,7 @@
-## QR and cats
+---
+title: "UnitedCTF 2021 part 4: QR and cats"
+date: 2021-10-09
+---
 
 Crypto and steganography are definitely not my specialty but I checked them out to see if there was some low hanging fruits. I checked the checked who were not worth a lot of points but I also looked at the number of peoples who had solved the challenge. Here are some that I've done:
 
@@ -78,5 +81,10 @@ I tought my QR was corrupted and since the CTF had just ended, I let it go. But 
 
 And then you had to call that number and it was a voice message with the flag, doh! I got confused by the title because I was focused on the rq part which is QR backward but the rest of the title didn't make sense, turns out I was headed in the wrong direction.
 
-[Back to main article](2021-10-09-unitedctf2021.md)
+# Won't be next: Reverse engineering
 
+I won't do writeups for reverse engineering but I've done Bootme and Exports, which were the two easiest. If you never done reverse engineering, you'll have to install and use a decompiler for the first challenge, which you will need to familiarize yourself with anyway if you want to improve in CTF. For the second challenge you'll need to use a tool to emulate processor which allows to run application compiled for a different architecture.
+
+## Next up: Web challenge
+
+I plan to do another post on the web tracks which features delicious cookies, file uploads, local file inclusion, remote command execution, insecure object reference as well as epic log forging. I will also include the Vaxinull challenge which I tought fit well with another healthcare-themed challenge: Plus bas soumissionnaire. Hope you liked what you saw and until have fun hacking with dockers!
