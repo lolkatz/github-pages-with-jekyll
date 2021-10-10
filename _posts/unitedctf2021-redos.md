@@ -1,0 +1,69 @@
+
+## ReDoS
+
+That track was very interesting for me because I didn't knew what ReDoS was and it turns out it's pretty powerful. So ReDoS means [Regular expression Denial of Services](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS). So basically there is some kind of algorithm that will try to match a string with the regular expression by evaluating all the possible paths. So you craft a string that will not match the regular expression but that will have a lot of possibility for the algorithm to explore. Here is an example of a problematic regex, it must begin by a and end with a and the two plus will try to match themself repeatedly:
+````
+^(a+)+$
+````
+Using this string that we know won't work since it doesn't end with an A (and ! won't match with an alphabetical character either so I'll be reusing it in all my ReDoS) but nonetheless the algorithm will try every path before concluding there is no match:
+````
+aaaaaaaaaaaaaaaa!
+````
+I used the website (regex 101)[https://regex101.com/], it's very convenient and explain every part of the the regex. I usually find Regular expression hard to read and I do not tend to use them but it can be useful in some case like validating email and phone number. Turns out there is [ReDoS in some default regex used for validation in ASP.NET MVC](http://blog.malerisch.net/2015/09/net-mvc-ReDoS-denial-of-service-vulnerability-cve-2015-2526.html). Sounds interesting I'll have to check this out sometimes... But back to the ReDoS tracks.
+
+### ReDoS 1: Introduction to ReDoS
+
+So you are given a regex and you are told that you can only enter 8 characters in a console and you need to have more then 2000 iterations with the ReDoS. Here is the regex:
+````
+^(\w*)+$
+````
+And here is my first successful ReDoS:
+
+![baby-ReDoS](/will-hack-for-coffee/assets/images/unitedctf2021/baby-redos.png)
+
+### ReDoS 2: email validation
+
+This one was funny so I'll just show you a picture of the challenge:
+
+![ReDoS-mail-validation](/will-hack-for-coffee/assets/images/unitedctf2021/redos2-mail-validation.png)
+
+Reading the python script you realize that the intern has no idea what the regex he is working on is used for:
+
+````python
+import re
+
+regex = r'^(?P<firstWord>\w+)(?P<followingWords>\.\w+)*(?P<extention>\+\w+)?@(?P<subdomain>\w+)(?P<higherLevelDomains>.\w+)+$'
+
+# firstWord: Match un premier "mot" [A-z0-9]
+# followingWords: Comme beaucoup de monde mettent plusieurs mots séparés par un ., on tente d'en matcher plusieurs.
+# extention: Dans notre dataset, j'ai vu des addresse qui ressemblaient à ça: addresse+unMot@exemple.com aucune idée de ce que ça fait, mais faut le supporter.
+# subdomain: On doit avoir un domaine initial
+# higherLevelDomains: Et avoir au moins 1 domaine de plus haut niveau (séparé par un . à chaque fois)
+````
+The regex in the code is slightly different then what I was used to. First the r means raw string and is meant so that [python syntax](https://docs.python.org/3/library/re.html) doesn't interfere with regular expression syntax. Then there is the (?P<name>...) notation which I didn't quite took the time to understand, so I had to wing it without relying as much on regex101. I got lucky using this payload:
+````
+a@a.aaaaaaaaaaaaaaaaaaaaaaaaaaa!
+````
+Anyway thank you intern!
+
+### ReDoS 3: Coding interview
+
+From the challenge description we know it's C++ source code. Here the python:
+````python
+import re
+
+msg = input()
+r = r'^(?P<import_statement>#import)((?P<lib> m[a-z]l{2,10}((?<=l{2})oc))|.);(?(lib)[A-z =]*|[0-9])+$'
+re.match(r, msg)
+````
+I remembered there was a library called malloc so I tried this payload and it worked beyond my expectation:
+
+![ReDoS 1 million](/will-hack-for-coffee/assets/images/unitedctf2021/redos3-one-million.png)
+
+I needed to do 64 thousand iterations and I did more then a million! 
+
+![ReDoS3 catastrophe](/will-hack-for-coffee/assets/images/unitedctf2021/redos3-catastrophe.png)
+
+Seeing those red messages warning of catastrophe made me proud but there were other easiest challenges that I wanted to try.
+
+[Back to main article](2021-10-09-unitedctf2021.md)
