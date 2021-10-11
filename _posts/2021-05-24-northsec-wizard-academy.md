@@ -2,7 +2,7 @@ This year [Northsec CTF](https://youtu.be/wJpInBMBSkg?t=2485) was medieval theme
 
 ![Map of North Sectoria](/will-hack-for-coffee/assets/images/north-sectoria-map.png)
 
-I had the opprotunity to play on the CTF with a team called Mary Poppins Shell. This year CTF featured a beginner track called Wizard academy and we finished most of the challenges in this track. The challenges included basic HTML, local file inclusion (LFI), file upload, SQL injection, server side request forgery (SSRF), open redirect and deserialization. 
+I had the opportunity to play on the CTF with a team called Mary Poppins Shell. This year CTF featured a beginner track called Wizard academy and we finished most of the challenges in this track. The challenges included basic HTML, local file inclusion (LFI), file upload, SQL injection, server side request forgery (SSRF), open redirect and deserialization. 
 
 ## Know your basic html
 
@@ -44,10 +44,10 @@ This set of challenges involved Local File Inclusion (LFI). The url had a query 
 
 ## LFI 101
 
-The first challenge was solved by a  by modifying the query string as such:  
+The first challenge was solved by modifying the query string as such:  
 ?page=/etc/passwd  
 
-This revealed the linux password file as well as the flag. He also solved the [LFI 103](https://erichogue.ca/2021/05/NorthSec2021WriteupMentalism/#mentalism-103).
+This revealed the linux password file as well as the flag. A friend from Hackfest solved the [LFI 103](https://erichogue.ca/2021/05/NorthSec2021WriteupMentalism/#mentalism-103).
 
 ## Spell recipe upload
 
