@@ -52,7 +52,7 @@ And when you're done I'll make you pop a shell again
 ````
 The lyrics also mentions Wannacry, APT and malware, all that good hacker stuff. And there is a word uttered throughout the videoclip: Success. If you pay attention you'll also see a number appears in the bottom righ corner:
 
-![Hidden IP](/will-hack-for-coffee/assets/images/hidden-ip.png).
+![Hidden IP](/will-hack-for-coffee/assets/images/hidden-ip.png)
 
 There is also another text at the end that says: The numbers are an ipv4 address. So I used that -sT parameter with nmap and I found nothing, apparently it was a joke and by doing so the firewall will detect the scan. So I then used a more classic scan techniques, stopping right after port 4999 like they told me:
 
