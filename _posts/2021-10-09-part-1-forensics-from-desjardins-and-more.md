@@ -11,7 +11,7 @@ One of the first challenge puzzled a lot of players myself included. The challen
 
 ![Discord flag](/will-hack-for-coffee/assets/images/unitedctf2021/discord-flag.png)
 
-I struggled at first, was it base64, a binary, some hex dump? I tried to concatenate the four strings but to no avail. I came back to it a week later and I thought maybe it's some hash? A wise man from Hackfest told me later that I could have used the hash-identifier tool in Linux, which is conveniently installed in kali. At that time tough I simply navigated to [Crack station](https://crackstation.net/) and got the flag:
+I struggled at first, was it base64, a binary, some hex dump? I tried to concatenate the four strings but to no avail. I came back to it a week later and I thought maybe it's some hash? A [wise man](https://www.mindkind.org/index.php) told me later that I could have used the hash-identifier tool in Linux, which is conveniently installed in kali. At that time tough I simply navigated to [Crack station](https://crackstation.net/) and got the flag:
 
 ![Crack station working it magic](/will-hack-for-coffee/assets/images/unitedctf2021/crack-station-magic.png)
 
