@@ -3,9 +3,9 @@ title: "Northsec Hackademy"
 date: 2022-05-28
 ---
 
-This year I participated again in NorthSec CTF. In the weeks prior to the events small challenges were annouced called warmups. There was signal analysis, git secret recovery, code audit, fuzzing, some NFT Shenanigan and more. Some were pretty rough but there was plenty hints that were added to allow people to catch up. 
+This year I participated again in NorthSec CTF. In the weeks prior to the events small challenges were annouced called warmups. There was signal analysis, git secret recovery, code audit, fuzzing, some NFT Shenanigan and more. Some were pretty rough but there was plenty hints that were added to allowed people to catch up. 
 
-As for the CTF itself, the scenario was that you were in pentesting a new startup company involved in NFT, metaverse and crypto currencies. Most of the challenges were insanely hard but like last year there was trivia questions related to hackers movie and the beginner track: Hackademy. It was the same track as last year with some minor changes and I took the time to complete every challenge, asking for help to solve some of them. 
+As for the CTF itself, the scenario was that you were pentesting a new startup company involved in NFT, metaverse and crypto currencies. Most of the challenges were insanely hard but like last year there was trivia questions related to hackers movies and the beginner track: Hackademy. It was the same track as last year with some minor changes and I took the time to complete every challenge, asking for help to solve some of them. 
 
 Here is the writeup for the Hackademy track.
 
@@ -72,7 +72,7 @@ It outputted a long base64 string. Decoding the resulting string I got the sourc
     <head>
     ...
 ````
-Last of these challenge use XML external entity injection (XXE). Hopefully I had an [enraged hacker (who is also an SQL genius)](https://gitlab.com/sebast331-ctf) who reminded me of the technique. Looking at the source code:
+Last of these challenge use XML external entity injection (XXE). Hopefully I had an [enraged hacker](https://gitlab.com/sebast331-ctf/laravulnerable/-/blob/master/app/vulns.md) who reminded me of the technique. Looking at the source code:
 
 ![Inclusion 3 source code](/will-hack-for-coffee/assets/images/nsec2022/inclusion3-source.png)
 
@@ -187,7 +187,7 @@ Navigating the first link and looking at Burp I saw that there was a redirect co
 
 ![JWT redirect](/will-hack-for-coffee/assets/images/nsec2022/jwt-redirect.png)
 
-You can use [jwt.io](jwt.io) confirm it's a JWT and check what's inside the token. 
+You can use [jwt.io](jwt.io) confirm it's a JWT and check what's inside the token:
 
 ![jwt.io](/will-hack-for-coffee/assets/images/nsec2022/jwt-io.png)
 
@@ -300,7 +300,7 @@ file:///etc/apache2/sites-enabled/000-default.conf
     </Directory>
 </VirtualHost>
 ````
-So that's where the database is but it can only be accessed locally from the server. I was a bit confused for that part but an enraged hacker gently nudged in the right direction. Let's take a look at the source code of the dabase webpage:
+So that's where the database is but it can only be accessed locally from the server. I was a bit confused for that part but an [enraged hacker (who is also a SQL genius)](https://www.youtube.com/watch?v=q95L-epzYnw) gently nudged me in the right direction. Let's take a look at the source code of the database webpage:
 ````
 <?php 
     if(isset($_POST['user'], $_POST['password'])) {
