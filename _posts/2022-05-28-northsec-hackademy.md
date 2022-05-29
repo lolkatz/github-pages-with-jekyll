@@ -72,7 +72,7 @@ It outputted a long base64 string. Decoding the resulting string I got the sourc
     <head>
     ...
 ````
-Last of these challenge use XML external entity injection (XXE). Hopefully I had an [enraged hacker](https://gitlab.com/sebast331-ctf/laravulnerable/-/blob/master/app/vulns.md) who reminded me of the technique. Looking at the source code:
+Last of these challenge use XML external entity injection (XXE). Hopefully an [enraged hacker](https://gitlab.com/sebast331-ctf/laravulnerable/-/blob/master/app/vulns.md) reminded me of the technique. Looking at the source code:
 
 ![Inclusion 3 source code](/will-hack-for-coffee/assets/images/nsec2022/inclusion3-source.png)
 
