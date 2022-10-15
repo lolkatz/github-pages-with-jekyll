@@ -2,7 +2,7 @@
 layout: post
 title: "Northsec Hackademy"
 date: 2022-05-28
-img: /assets/images/nsec2022/hackademy.png
+img: /will-hack-for-coffee/assets/images/nsec2022/hackademy.png
 ---
 
 This year I participated again in NorthSec CTF. In the weeks prior to the events small challenges were annouced called warmups. There was signal analysis, git secret recovery, code audit, fuzzing, some NFT Shenanigan and more. Some were pretty rough but there was plenty hints that were added to allowed people to catch up. 
@@ -11,7 +11,7 @@ As for the CTF itself, the scenario was that you were pentesting a new startup c
 
 Here is the writeup for the Hackademy track.
 
-![Hackademy website](/assets/images/nsec2022/hackademy.png)
+![Hackademy website](/will-hack-for-coffee/assets/images/nsec2022/hackademy.png)
 
 ## Automatization 101 and 102
 
@@ -76,26 +76,26 @@ It outputted a long base64 string. Decoding the resulting string I got the sourc
 ````
 Last of these challenge use XML external entity injection (XXE). Hopefully an [enraged hacker](https://gitlab.com/sebast331-ctf/laravulnerable/-/blob/master/app/vulns.md) reminded me of the technique. Looking at the source code:
 
-![Inclusion 3 source code](/assets/images/nsec2022/inclusion3-source.png)
+![Inclusion 3 source code](/will-hack-for-coffee/assets/images/nsec2022/inclusion3-source.png)
 
 I sent the POST from the underlying Javascript AJAX request to my Burp Repeater tab and edited the body parameter so the content of the passwd file is shown through the ext variable on the website.
-![XXE](/assets/images/nsec2022/xxe.png)
+![XXE](/will-hack-for-coffee/assets/images/nsec2022/xxe.png)
 
 ## Upload 101, 102, 103 and 104
 
 So here the challenges are to upload a php file (with potential remote code execution) while evading validation.
 
-![File upload website](/assets/images/nsec2022/file-upload.png)
+![File upload website](/will-hack-for-coffee/assets/images/nsec2022/file-upload.png)
 
 So for the first challenge I renamed my file to reverse.jpg.php. The file will be interpreted as PHP and my code could be executed. The validation probably only checked if the allowed extension was in the filename.
 
 For the second challenge I needed to modify the Content-Type header for image/jpeg with the following value:
 
-![Content-Type header](/assets/images/nsec2022/content-type.png)
+![Content-Type header](/will-hack-for-coffee/assets/images/nsec2022/content-type.png)
 
 For the third challenge I submitted the same file and it warn me that the signature didn't match a JPEG file. So I used the website hexed.it and modified the [signature](https://en.wikipedia.org/wiki/List_of_file_signatures). 
 
-![Hexed.it](/assets/images/nsec2022/hexed.png)
+![Hexed.it](/will-hack-for-coffee/assets/images/nsec2022/hexed.png)
 
 The resulting forged file was uploaded (again modifying the Content-Type header).
 
@@ -105,7 +105,7 @@ For the fourth upload challenge I renamed the file to rev.png.php3 a less known 
 
 Those two challenges were about SQL injection and the website consisted of a login form. A nice tip that I learned from Burp is that you can submit a single quote (') to a form to test for SQL injection. If there is an error there a strong possibility that it's vulnerable to SQL injection. The first challenge was an authentication bypass: 
 
-![SQL injection 102](/assets/images/nsec2022/sql-injection102.png)
+![SQL injection 102](/will-hack-for-coffee/assets/images/nsec2022/sql-injection102.png)
 
 It worked because the query returns one (empty) row. It also gives us a hint for the other challenge. Last year I suggested to a teammate that he could have used [sqlmap to solve that challenge](https://erichogue.ca/2021/05/NorthSec2021WriteupSpellQueryLanguage/#flag-1) but I didn't took the time to try it myself. Here is the command that worked for me:
 ````
@@ -183,15 +183,15 @@ sqlmap exfiltrated all the database and revealead the flag in the table fl4G_1s_
 
 I tought open redirect was a minor vulnerability? I browsed the site and there was two links:
 
-![Open redirect 101](/assets/images/nsec2022/open-redirect101.png)
+![Open redirect 101](/will-hack-for-coffee/assets/images/nsec2022/open-redirect101.png)
 
 Navigating the first link and looking at Burp I saw that there was a redirect containing a Jason Web Token token:
 
-![JWT redirect](/assets/images/nsec2022/jwt-redirect.png)
+![JWT redirect](/will-hack-for-coffee/assets/images/nsec2022/jwt-redirect.png)
 
 You can use [jwt.io](jwt.io) confirm it's a JWT and check what's inside the token:
 
-![jwt.io](/assets/images/nsec2022/jwt-io.png)
+![jwt.io](/will-hack-for-coffee/assets/images/nsec2022/jwt-io.png)
 
 The next link on the website allows you to provide an URL and the "Grand master pentester" will visit it. Our team owned a small server on the NorthSec network so I redirected him there instead:
 
@@ -206,13 +206,13 @@ root@ctn-shell:/var/log/apache2#cat access.log
 ````
 I can see his credentials and I used it to log as my "master".
 
-![Grand master credentials](/assets/images/nsec2022/grand-master-credentials.png)
+![Grand master credentials](/will-hack-for-coffee/assets/images/nsec2022/grand-master-credentials.png)
 
 ### Serialize 101
 
 A simple Hello word! page with the source available. There is also weird s parameter that I will tamper with later.
 
-![Serialize 101](/assets/images/nsec2022/serialize101.png)
+![Serialize 101](/will-hack-for-coffee/assets/images/nsec2022/serialize101.png)
 
 Looking at the source:
 ````
@@ -278,7 +278,7 @@ Then used that base64 string in the s parameter and got the flag.
 
 This website allows you to send some commands like ping and such. But you can also use any other protocol and obtain file located on the server and it will not be interpretated. Let's take a look at the config file of the API:
 
-![Server Side Request Forgery 101](/assets/images/nsec2022/ssrf101.png)
+![Server Side Request Forgery 101](/will-hack-for-coffee/assets/images/nsec2022/ssrf101.png)
 
 So here is the first flag with some bonus database credentials. Here is another important file used by the Apache server:
 
@@ -338,7 +338,7 @@ So that's where the database is but it can only be accessed locally from the ser
 ````
 Let's query the table of that database (we can guess it's a PostgreSQL database from the user) using a default database table:
 
-![Server Side Request Forgery 102](/assets/images/nsec2022/ssrf102.png)
+![Server Side Request Forgery 102](/will-hack-for-coffee/assets/images/nsec2022/ssrf102.png)
 
 Then I used those parameters to get the flag:
 ````
@@ -347,6 +347,6 @@ user=postgres&password=Let%26me%3Din&query=SELECT * from flag.flag_25bb3839f8073
 
 In last year CTF, the flag was in a flag.txt located at the root folder so we lucked out getting it. This year this was fixed so I had to use remote command injection (reverse shell would have been even [better](https://erichogue.ca/2022/05/NorthSec/HackademyForgery#forgery-103---obtain-hrce-hackademy-recognized-certified-expert)!). It's well [explained](https://medium.com/greenwolf-security/authenticated-arbitrary-command-execution-on-postgresql-9-3-latest-cd18945914d5) here and it work well even if the syntax is kinda weird (maybe disable this on your production server?):
 
-![Postgresql remote command execution](/assets/images/nsec2022/postgresql-rce.png)
+![Postgresql remote command execution](/will-hack-for-coffee/assets/images/nsec2022/postgresql-rce.png)
 
 But instead of logging in the database you use the query to create the table, copy your command and execute them. Looking at the root folder I listed the flag and read it. Congratulation and enjoy your newly acquired Hackademy Certified Ethical Hacker!

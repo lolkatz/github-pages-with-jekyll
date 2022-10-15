@@ -6,7 +6,7 @@ date: 2021-05-24
 
 This year [Northsec CTF](https://youtu.be/wJpInBMBSkg?t=2485) was medieval themed and took place in the land of North Sectoria. In this kingdom, hackers are called magicians. Do you have what it takes to become a wizard?
 
-![Map of North Sectoria](/assets/images/north-sectoria-map.png)
+![Map of North Sectoria](/will-hack-for-coffee/assets/images/north-sectoria-map.png)
 
 I had the opportunity to play on the CTF with a team called Mary Poppins Shell. This year CTF featured a beginner track called Wizard academy and we finished most of the challenges in this track. The challenges included basic HTML, local file inclusion (LFI), file upload, SQL injection, server side request forgery (SSRF), open redirect and deserialization. 
 
@@ -46,7 +46,7 @@ Browsing to this page we found the next flag.
 
 This set of challenges involved Local File Inclusion (LFI). The url had a query string: ?page=hackademy.php
 
-![mentalism.png](/assets/images/mentalism101.png)
+![mentalism.png](/will-hack-for-coffee/assets/images/mentalism101.png)
 
 ## LFI 101
 
@@ -73,17 +73,17 @@ For this challenge, we kept the previous file and uploaded it again. We intercep
 We then modified the content type of the request like so to obtain the flag:
 
 
-![Modifying content type with Burp](/assets/images/file-upload102.png)
+![Modifying content type with Burp](/will-hack-for-coffee/assets/images/file-upload102.png)
 
 ### File upload 103
 
 For the third challenge, using the same previous technique was not enough. So we decided to add a magic number to the file. Looking at the list of file signature ([List of file signatures](https://en.wikipedia.org/wiki/List_of_file_signatures)):
 
-![JPG file signature](/assets/images/jpg-file-signature.png)
+![JPG file signature](/will-hack-for-coffee/assets/images/jpg-file-signature.png)
 
 With a text editor we added a line with four characters ('AAAA') at the beginning of the file. Then using hexedit we replaced those caracters with the jpg file signature:
 
-![hexedit](/assets/images/hexedit.png)
+![hexedit](/will-hack-for-coffee/assets/images/hexedit.png)
 
 Uploading this file got us another flag.
 
@@ -95,7 +95,7 @@ This set of challenges involved SQL injection. I tried the most basic injection:
 
 My teammates found the first flag using UNION based SQL injection:
 
-![Union based SQL injection](/assets/images/sql-injection101.png)
+![Union based SQL injection](/will-hack-for-coffee/assets/images/sql-injection101.png)
 
 [They](https://erichogue.ca/2021/05/NorthSec2021WriteupSpellQueryLanguage/#flag-1) also found the second one, kudos to them!
 
@@ -107,7 +107,7 @@ Wait a minute, is that Server Side Request Forgery? I was always tought that was
 
 The API allows to pass HTTP request along method GET and POST, as well as parameters. But can we request file?
 
-![SSRF 101](/assets/images/ssrf-passwd.png)
+![SSRF 101](/will-hack-for-coffee/assets/images/ssrf-passwd.png)
 
 After this I was wondering which other files I could look up, someone suggested to look for flag obviously, and there it was at the the root of the directory:
 
@@ -134,7 +134,7 @@ What’s the best brand of toothbrush to wash your teeth after your morning Cere
 
 We will have to ask Twitter about this one:
 
-![Cereal Killer on Twitter](/assets/images/ceralKillerToothbrush.png)
+![Cereal Killer on Twitter](/will-hack-for-coffee/assets/images/ceralKillerToothbrush.png)
 
 Also known as “cyberspirits”, how are these magnificient subway rollerbladers also called?
 

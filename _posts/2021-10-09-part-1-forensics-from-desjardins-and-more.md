@@ -10,11 +10,11 @@ date: 2021-10-09
 
 One of the first challenge puzzled a lot of players myself included. The challenge was the second text in one of the Discord channels:
 
-![Discord flag](/assets/images/unitedctf2021/discord-flag.png)
+![Discord flag](/will-hack-for-coffee/assets/images/unitedctf2021/discord-flag.png)
 
 I struggled at first, was it base64, a binary, some hex dump? I tried to concatenate the four strings but to no avail. I came back to it a week later and I thought maybe it's some hash? A [wise man](https://www.mindkind.org/index.php) told me later that I could have used the hash-identifier tool in Linux, which is conveniently installed in kali. At that time tough I simply navigated to [Crack station](https://crackstation.net/) and got the flag:
 
-![Crack station working it magic](/assets/images/unitedctf2021/crack-station-magic.png)
+![Crack station working it magic](/will-hack-for-coffee/assets/images/unitedctf2021/crack-station-magic.png)
 
 Very reliable site for CTF but I would not recommend using it for sensitive hash tough (that you got from work or home network), since once they are on the internet your hash won't provide much protection to your password (as you can see).
 
@@ -59,25 +59,25 @@ Using the python scripts already installed on the machine you can extract those 
 ````
 Not very friendly to search through but here is the flag:
 
-![RDP cache flag](/assets/images/unitedctf2021/rdp-cache-flag.png)
+![RDP cache flag](/will-hack-for-coffee/assets/images/unitedctf2021/rdp-cache-flag.png)
 
 ### Windows Forensic 2: Deleted folder
 
 So the user cleaned up his desktop and emptied his bin to make sure nobody could find what he did. Turns out you can see the folders that were deleted using [ShellBags Explorer](https://www.youtube.com/watch?v=YvVemshnpKQ), which was also conveniently installed on the desktop. You only had to select File -> Load active registry and there you have it:
 
-![Shellbag explorer](/assets/images/unitedctf2021/shellbag-explorer.png)
+![Shellbag explorer](/will-hack-for-coffee/assets/images/unitedctf2021/shellbag-explorer.png)
 
 ### Windows Forensic 3: Deleted file
 
 And now what was the name of the file inside of this folder? Turns out Windows is also storing that info somewhere as shortcuts or [LNK file](https://www.youtube.com/watch?v=YvVemshnpKQ):
 
-![lnk](/assets/images/unitedctf2021/lnk.png)
+![lnk](/will-hack-for-coffee/assets/images/unitedctf2021/lnk.png)
 
 ### Windows Forensic 4: And now when was it deleted?
 
 The last flag was the the date that file was deleted. It was very straightforward to do since the NTFS journal was already extracted on the machine and the tools to read it was also already installed: ANJP. But just look at the video called [NTFS Journal Forensics](https://www.youtube.com/watch?v=1mwiShxREm8) if you want to see more in depth. So here is the info we are looking for:
 
-![ntfs-journal](/assets/images/unitedctf2021/ntfs-journal.png)
+![ntfs-journal](/will-hack-for-coffee/assets/images/unitedctf2021/ntfs-journal.png)
 
 ### FAT32: Did someone stick an USB in this machine?
 
@@ -87,11 +87,11 @@ The last challenge on the Desjardins track involved a malicious actor that used 
 
 There was a LibreOffice file which was describing a real life vulnerability affecting particular DrayTek device. We were told flags were hidden in the file, I found two of them. The description of the challenge gave a couple of clues of how to find hidden text in Libre Office files like making font invisible and such. By changing the color of the background I found a first flag (the document is several page long so I'm just showing the first part of the flag):
 
-![libre office hidden fonts](/assets/images/unitedctf2021/libre-office-hidden-fonts.png)
+![libre office hidden fonts](/will-hack-for-coffee/assets/images/unitedctf2021/libre-office-hidden-fonts.png)
 
 For the second flag a wise man told from Hackfest told me that odt (and docx) file format are basically zip file. I had forgotten about this so I unzipped the files and browsing through the picture folders I found this:
 
-![libre office out of place picture](/assets/images/unitedctf2021/libre-office-007.png)
+![libre office out of place picture](/will-hack-for-coffee/assets/images/unitedctf2021/libre-office-007.png)
 
 ## To conclude
 

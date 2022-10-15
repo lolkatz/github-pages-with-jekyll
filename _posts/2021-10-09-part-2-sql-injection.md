@@ -10,7 +10,7 @@ I really liked this track, there was nine (relatively) easy challenges on SQL in
 
 Each challenge involved a basic login page. Using Burp Suite helped me adjust my payload quickly and offered basic documentation.
 
-![SQLi login](/assets/images/unitedctf2021/sqli-login.png)
+![SQLi login](/will-hack-for-coffee/assets/images/unitedctf2021/sqli-login.png)
 
 For the username field I used admin (as with all others SQLi challenges). For the password field I used this payload to get the first flag:
 ````
@@ -29,7 +29,7 @@ password" or id=1 --
 
 For the next challenge the admin was not in the first row so I used Burp intruder tab and specified id as my payload variable:
 
-![burp-intruder](/assets/images/unitedctf2021/burp-intruder.png)
+![burp-intruder](/will-hack-for-coffee/assets/images/unitedctf2021/burp-intruder.png)
 
 Turned out his id was 2... xD
 
@@ -58,7 +58,7 @@ Similar challenge except there is no filter and the table name is unknown. It wa
 ````
 " UNION SELECT "","",name from sqlite_master where sql like "%flag%" --
 ````
-![table-name](/assets/images/unitedctf2021/table-name.png)
+![table-name](/will-hack-for-coffee/assets/images/unitedctf2021/table-name.png)
 
 With this info I found the flag like so:
 
