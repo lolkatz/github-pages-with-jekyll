@@ -1,6 +1,12 @@
+---
+layout: post
+title: "Full database exfiltration oneliner"
+date: 2021-03-15
+---
+
 Now that I have your attention I must warn you, this post is about SQL injection. It's been there for awhile and it's widely known how to protect against them. But even then it's still the top vulnerability in the [OWASP top ten](https://owasp.org/www-project-top-ten/) (even tough it been merged with other type of injection). You probably have seen this joke before (thanks to [xkcd](https://xkcd.com)):
 
-![Bobby Tables cartoon](/will-hack-for-coffee/assets/images/little-bobby-tables.png)\
+![Bobby Tables cartoon](/assets/images/little-bobby-tables.png)\
 Figure 1: Little Bobby Tables
 
 ## My own tale
@@ -38,7 +44,7 @@ Everything after the -- is considered a comment so will be ignored by the databa
 
  The demo I'll use is from the Web Security Academy by [Portswigger](https://portswigger.net/web-security), the company that own the tool Burp Suite. The lab is called _SQL injection attack, listing the database contents on Oracle_  and the goal is to find the administrator password. Let's take a look at the site and refine the search by clicking on a category:
 
-![A simple shopping site](/will-hack-for-coffee/assets/images/sqli-demo1.png)\
+![A simple shopping site](/assets/images/sqli-demo1.png)\
 Figure 2: A simple shopping site
 
 Notice the query string, that's where I'll try to inject by adding a string at the end of the url. On this site I can use UNION SQL injection and it will show me the results of my query. But there is other techniques like blind SQL injection that doesn't require you to see the output on the website, it's out of scope of this post but just know that it exist. First we need to determine the nuber of colums. So I will try to union a row with the same number of column. Why selecting a null? It's because null can be inserted in columns of any datatype:
@@ -53,7 +59,7 @@ I got no error but I can't see the row I've added, well it's was null value afte
 
 ``'+union+select+'TableName',table_name+from+all_tables--``
 
-![Shopping site displaying internal details about the database](/will-hack-for-coffee/assets/images/sqli-demo2.png)\
+![Shopping site displaying internal details about the database](/assets/images/sqli-demo2.png)\
 Figure 3: Shopping site displaying internal details about the database
 
 I knew from the start it was an Oracle database management system so I knew which syntax to use but otherwise it's a bit of trials and errors. The following line would have output the DBMS for that particular website but it would have been different if it had been PostreSQL or else:

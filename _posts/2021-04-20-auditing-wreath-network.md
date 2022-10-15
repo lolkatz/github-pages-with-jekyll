@@ -1,11 +1,12 @@
 ---
+layout: post
 title: "Auditing Wreath network"
 date: 2021-04-20
 ---
 
 A new room has opened on Tryhackme to learn about network penetration testing: [Wreath network](https://tryhackme.com/room/wreath). It's a free room but you need to have a 7-day streak, meaning  solving a question every day for seven days, to access it. The writeup for this room need to be in a different format than usual. You needed to write a penetration testing report as you would have to do if it was a real job. It was the first time for me so I had to learn more in details the classification of vulnerabilities and I had to put more toughts into potential remediation. My writeup got accepted so you can read it here: [Penetration test report for Wreath network](https://lolkatz.github.io/will-hack-for-coffee/writeups/penetrationTestReportWreathNetwork.pdf). In the rest of this post I'll just highlights some of the things I found interesting.
 
-![I hacked Wreath network](/will-hack-for-coffee/assets/images/hackedWreathNetworkMeme.png)
+![I hacked Wreath network](/assets/images/hackedWreathNetworkMeme.png)
 
 The scenario is that you have been tasked by one of your old classmate, Thomas Wreath, to audit his personal network consisting of a public facing webserver, a git server and his personal computer. It's an introduction to network penetration testing where you can learn and practice multiple pivoting techniques, among them Socat (a beefed up version of netcat) relay, a Chisel forward socks proxy and sshuttle a very useful encrypted tunnel using ssh that act has a kind of VPN. You will also have to use Foxyproxy which is a must have extension for Firefox if you ever used Burp Suite. Finally, you will also get some experiences dealing with firewall and antivirus system.
 

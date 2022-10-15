@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Pivoting through the Throwback Active Directory network"
 date: 2021-03-11
 ---
@@ -10,7 +11,7 @@ The Throwback network on [Tryhackme](https://tryhackme.com/room/throwback) simul
 
 At first you only see some of the boxes and more are added to the network diagram as you progress. I'll show you what the entirely discovered network looks like:
 
-![Throwback network diagram](/will-hack-for-coffee/assets/images/tb-network-diagram.png)\
+![Throwback network diagram](/assets/images/tb-network-diagram.png)\
 Figure 1: The Throwback network diagram
 
 Let's VPN into the network and run nmap:
@@ -252,12 +253,12 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 Next let's take a look at the company website. There is some employees photos and job title, always fun to see who's behind the username we might encounter. There is also email contacts that could be useful but we will getting a lot more of them in the next section. At the bottom of the site there is link to Linkedin and Twitter account which would be a good start for OSINT.
 
-![Throwback hacks website](/will-hack-for-coffee/assets/images/tb-hacks-website.png)\
+![Throwback hacks website](/assets/images/tb-hacks-website.png)\
 Figure 2: Throwback Hacks website
 
 Before we go any further I'll show you a slightly different network diagram that will help me illustrate the path I took through the network. On the diagram you can see my laptop which has VPN connection to the network. I will use the IP that correspond to tun0 (you can see that address with ifconfig) when I set up reverse shell and such. The network I'm in is 10.200.19.0/24 but yours maybe different.
 
-![Throwback hacks website](/will-hack-for-coffee/assets/images/tb-network-diagram2.png)\
+![Throwback hacks website](/assets/images/tb-network-diagram2.png)\
 Figure 3: Network diagram from my perspective
 
 There is multiple path to reach the Throwback domain but I will use an easy and fast way: a phishing attack.
@@ -294,12 +295,12 @@ You can keep the values of your parameters you set using **save**. To start the 
 
 Now let’s take a look the Throwback-MAIL website.
 
-![Throwback hacks website](/will-hack-for-coffee/assets/images/tb-mail.png)\
+![Throwback hacks website](/assets/images/tb-mail.png)\
 Figure 4: Throwback mail website
 
 Conveniently, there is a guest account. Log in and you'll see that you have access to an address book. Send everyone an email, urging them to execute your payload:
 
-  ![Throwback hacks website](/will-hack-for-coffee/assets/images/phishing-email.png)\
+  ![Throwback hacks website](/assets/images/phishing-email.png)\
 Figure 4: A suspicious mail from IT
 
 ## All the cool kids love Metasploit
