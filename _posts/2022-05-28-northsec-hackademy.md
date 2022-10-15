@@ -2,7 +2,7 @@
 layout: post
 title: "Northsec Hackademy"
 date: 2022-05-28
-img: /will-hack-for-coffee/assets/images/nsec2022/hackademy.png
+image: /will-hack-for-coffee/assets/images/nsec2022/hackademy.png
 ---
 
 This year I participated again in NorthSec CTF. In the weeks prior to the events small challenges were annouced called warmups. There was signal analysis, git secret recovery, code audit, fuzzing, some NFT Shenanigan and more. Some were pretty rough but there was plenty hints that were added to allowed people to catch up. 

@@ -2,6 +2,7 @@
 layout: post
 title: "Pivoting through the Throwback Active Directory network"
 date: 2021-03-11
+image: "/will-hack-for-coffee/assets/images/tb-network-diagram.png"
 ---
 
 

@@ -2,6 +2,7 @@
 layout: post
 title: "NorthSec Wizard Academy"
 date: 2021-05-24
+image: "/will-hack-for-coffee/assets/images/north-sectoria-map.png"
 ---
 
 This year [Northsec CTF](https://youtu.be/wJpInBMBSkg?t=2485) was medieval themed and took place in the land of North Sectoria. In this kingdom, hackers are called magicians. Do you have what it takes to become a wizard?

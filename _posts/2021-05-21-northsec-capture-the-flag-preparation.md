@@ -2,6 +2,7 @@
 layout: post
 title: "NorthSec Capture The Flag preparation"
 date: 2021-05-21
+image: "/will-hack-for-coffee/assets/images/nsec2021-badge.png"
 ---
 
 I participated in Northsec 2021 CTF. It was super fun and the build up to it kept us pretty busy. I want to tell you about what the weeks were like up to the compettion. First I'll talk about some of features and contents contained in this year badge. Then I'll walk you through CTF warmup on the Discord that culminated in a mock hack on a public IP. After that, I'll highlights some cool things I learned in the excellent CTF 101 workshop that I attended during the conference part of the NorthSec event. Finally, I'll shortly describe my setup to connect to the IPv6 infra and I'll show you where we find our first flag, before the event even started.

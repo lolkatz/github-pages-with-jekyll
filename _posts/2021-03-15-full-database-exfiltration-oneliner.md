@@ -2,6 +2,7 @@
 layout: post
 title: "Full database exfiltration oneliner"
 date: 2021-03-15
+image: "/will-hack-for-coffee/assets/images/little-bobby-tables.png"
 ---
 
 Now that I have your attention I must warn you, this post is about SQL injection. It's been there for awhile and it's widely known how to protect against them. But even then it's still the top vulnerability in the [OWASP top ten](https://owasp.org/www-project-top-ten/) (even tough it been merged with other type of injection). You probably have seen this joke before (thanks to [xkcd](https://xkcd.com)):
