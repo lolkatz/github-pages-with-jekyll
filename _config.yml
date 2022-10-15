@@ -23,7 +23,7 @@ author: lolKatz
 description: Hack for good and protect the internet # this means to ignore newlines until "baseurl:"
 show_excerpts: true # set to true to show excerpts on the homepage
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://lolkatz.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: 0xfil
 github_username:  lolKatz
 
