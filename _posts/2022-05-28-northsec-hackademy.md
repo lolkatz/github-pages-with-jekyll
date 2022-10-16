@@ -5,7 +5,7 @@ date: 2022-05-28
 image: /will-hack-for-coffee/assets/images/nsec2022/hackademy.png
 ---
 
-This year I participated again in NorthSec CTF. In the weeks prior to the events small challenges were annouced called warmups. There was signal analysis, git secret recovery, code audit, fuzzing, some NFT Shenanigan and more. Some were pretty rough but there was plenty hints that were added to allowed people to catch up. 
+This year I participated again in NorthSec CTF. In the weeks prior to the events small challenges were annouced called warmups. There was signal analysis, git secret recovery, code audit, fuzzing, some NFT Shenanigan and more. Some were pretty rough but there was plenty hints that were added to allow people to catch up. 
 
 As for the CTF itself, the scenario was that you were pentesting a new startup company involved in NFT, metaverse and crypto currencies. Most of the challenges were insanely hard but like last year there was trivia questions related to hackers movies and the beginner track: Hackademy. It was the same track as last year with some minor changes and I took the time to complete every challenge, asking for help to solve some of them. 
 

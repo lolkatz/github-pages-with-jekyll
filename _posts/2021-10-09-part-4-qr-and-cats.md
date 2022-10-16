@@ -4,7 +4,7 @@ title: "UnitedCTF 2021 part 4: QR and cats"
 date: 2021-10-09
 ---
 
-Crypto and steganography are definitely not my specialty but I checked them out to see if there was some low hanging fruits. I checked the checked who were not worth a lot of points but I also looked at the number of peoples who had solved the challenge. Here are some that I've done:
+Crypto and steganography are definitely not my specialty but I checked them out to see if there was some low hanging fruits. I checked the ones who were not worth a lot of points but I also looked at the number of peoples who had solved the challenge. Here are some that I've done:
 
 ## Encodage
 

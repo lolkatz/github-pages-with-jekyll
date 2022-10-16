@@ -11,6 +11,10 @@ This year [Northsec CTF](https://youtu.be/wJpInBMBSkg?t=2485) was medieval theme
 
 I had the opportunity to play on the CTF with a team called Mary Poppins Shell. This year CTF featured a beginner track called Wizard academy and we finished most of the challenges in this track. The challenges included basic HTML, local file inclusion (LFI), file upload, SQL injection, server side request forgery (SSRF), open redirect and deserialization. 
 
+### Update
+If you are looking for the complete solve of this beginner track look at my 2022 update: 
+[Northsec Hackademy](https://lolkatz.github.io/will-hack-for-coffee/2022/05/28/northsec-hackademy.html). If you want more trivia about the hackers movie, skip to [Bonus: Hacker Trivia](https://lolkatz.github.io/will-hack-for-coffee/2021/05/24/northsec-wizard-academy.html#bonus-points-hackers-trivia). But feel free to continue if you just want to read wizard themed hacking pun! 
+
 ## Know your basic html
 
 The first set of challenge was called Automatization and was a pun based on the robots text file.
