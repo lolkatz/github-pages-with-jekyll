@@ -1,0 +1,14 @@
+pre,
+code {
+    background-color: #000;
+    font-size: 15px;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    color:#fff 
+}
+
+pre.highlight {
+    background: #000;
+}
+
+.highlighter-rouge .highlight { background: #000; }
