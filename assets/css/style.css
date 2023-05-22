@@ -1,0 +1,12 @@
+img.centered {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  p.note {
+    color: #fff;
+    font-weight: 400;
+    background-color: #0389aa;
+    font-size:xx-large
+  }
