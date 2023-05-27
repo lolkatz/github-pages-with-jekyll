@@ -493,7 +493,7 @@ We have the user and the password from the config file. We now know we can speci
 
 ![Server Side Request Forgery query](/will-hack-for-coffee/assets/images/nsec2022/ssrf-query.png)
 
-Hmmm there is a table that looks interseting. Use that query to find the second flag:
+Hmmm there is a table that looks interesting. Use that query to find the second flag:
 ````
 user=postgres&password=Let%26me%3Din&query=SELECT * from flag.flag_25bb3839f80731bb
 ````
