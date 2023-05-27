@@ -6,14 +6,16 @@ image: /will-hack-for-coffee/assets/images/nsec2022/hackademy.png
 custom_css: terminal
 ---
 
-This year I participated again in NorthSec CTF. In the weeks prior to the events small challenges were annouced called warmups. There was signal analysis, git secret recovery, code audit, fuzzing, some NFT Shenanigan and more. Some were pretty rough but there was plenty hints that were added to allow people to catch up. 
-
-As for the CTF itself, the scenario was that you were pentesting a new startup company involved in NFT, metaverse and crypto currencies. Most of the challenges were insanely hard but like last year there was trivia questions related to hackers movies and the beginner track: Hackademy. It was the same track as last year with some minor changes and I took the time to complete every challenge, asking for help to solve some of them. 
-
 {:.note}
 Updated for Northsec 2023
 
-Here is the writeup for the Hackademy track:
+What's worst then a half baked poorly written writeup? My writeup, of course! Just kidding but I've updated it so it will be easier to use. It's a beginner track so you want to try it by yourself first but sometimes if you've never seen the technique, reading the solution while doing it might be another great way to learn.
+
+This year I participated again in NorthSec CTF. I had done the Hackademy track previously and had even done this writeup so I tought I had mastered this track. I let my teammates handle those challenges and when they asked me questions I redirected them to this post. But I saw that they were struggling to make sense of some parts. Even I had some difficulty explaining how I obtained some flags. We finally completed the track but NorthSec left the infrastructure in place for some times after the event, so I took the time to update my blog based on that experience. 
+
+So hoping it's my final version, here is my update writeup for the Hackademy track:
+
+# Table of contents
 
 [Automatization](/will-hack-for-coffee/2022/05/28/northsec-hackademy.html#automatization)
 [Inclusion](/will-hack-for-coffee/2022/05/28/northsec-hackademy.html#inclusion)
