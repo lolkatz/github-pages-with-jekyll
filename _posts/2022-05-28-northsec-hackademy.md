@@ -6,10 +6,10 @@ image: /will-hack-for-coffee/assets/images/nsec2022/hackademy.png
 custom_css: terminal
 ---
 
+What's worst then a half baked poorly written writeup? My writeup, of course! Just kidding but I've updated it so it will be easier to use. It's a beginner track so you want to try it by yourself first but sometimes if you've never seen the technique, reading the solution while doing it might be another great way to learn.
+
 {:.note}
 Updated for Northsec 2023
-
-What's worst then a half baked poorly written writeup? My writeup, of course! Just kidding but I've updated it so it will be easier to use. It's a beginner track so you want to try it by yourself first but sometimes if you've never seen the technique, reading the solution while doing it might be another great way to learn.
 
 This year I participated again in NorthSec CTF. I had done the Hackademy track previously and had even done this writeup so I tought I had mastered this track. I let my teammates handle those challenges and when they asked me questions I redirected them to this post. But I saw that they were struggling to make sense of some parts. Even I had some difficulty explaining how I obtained some flags. We finally completed the track but NorthSec left the infrastructure in place for some times after the event, so I took the time to update my blog based on that experience. 
 
